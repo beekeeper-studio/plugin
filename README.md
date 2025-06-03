@@ -34,5 +34,4 @@ npm run prepublishOnly
 
 ## License
 
-MIT - see [LICENSE](LICENSE) file for details.
-
+MIT
