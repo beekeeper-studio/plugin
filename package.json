@@ -9,8 +9,8 @@
     "dist/*.d.ts"
   ],
   "scripts": {
-    "build": "tsc",
-    "prepublishOnly": "npm run build"
+    "build": "rollup -c",
+    "prepublishOnly": "yarn run build"
   },
   "repository": {
     "type": "git",
@@ -30,6 +30,12 @@
     "url": "https://beekeeperstudio.io"
   },
   "devDependencies": {
+    "@rollup/plugin-commonjs": "^28.0.3",
+    "@rollup/plugin-node-resolve": "^16.0.1",
+    "@rollup/plugin-typescript": "^12.1.2",
+    "rollup": "^4.41.1",
+    "rollup-plugin-dts": "^6.2.1",
+    "tslib": "^2.8.1",
     "typescript": "^5.8.3"
   }
 }

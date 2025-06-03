@@ -1,6 +1,31 @@
+const pendingRequests = new Map();
+window.addEventListener("message", (event) => {
+    const { id, name, args, result, error } = event.data || {};
+    if (name) {
+        const handlers = notificationListeners.get(name);
+        if (handlers) {
+            handlers.forEach((handler) => handler(args));
+        }
+    }
+    if (id && pendingRequests.has(id)) {
+        const { resolve, reject, name } = pendingRequests.get(id);
+        pendingRequests.delete(id);
+        if (error) {
+            reject(error);
+        }
+        else {
+            resolve(result);
+        }
+    }
+});
+function notify(name, args) {
+    window.parent.postMessage({ name, args }, "*");
+}
+const notificationListeners = new Map();
+
 /** Any events that need to be forwarded to parent/plugin system
  * must go here */
-import { notify } from "./comms";
+/** FIXME this file must be injected from the plugin system automatically */
 function createEventInit(event) {
     if (event instanceof MouseEvent) {
         const eventInitOptions = {
@@ -111,3 +136,4 @@ forwardedEvents.forEach((eventType) => {
         });
     });
 });
+//# sourceMappingURL=eventForwarder.js.map

@@ -1,6 +1,8 @@
 /** Any events that need to be forwarded to parent/plugin system
  * must go here */
 
+/** FIXME this file must be injected from the plugin system automatically */
+
 import { notify } from "./comms";
 import { WindowEventInits, WindowEventClass } from "./commonTypes";
 
