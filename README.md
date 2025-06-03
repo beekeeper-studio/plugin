@@ -5,7 +5,9 @@ A TypeScript wrapper library for building Beekeeper Studio plugins that enables 
 ## Installation
 
 ```bash
-npm install @beekeeperstudio/plugin
+npm install github:beekeeper-studio/plugin
+# or
+yarn add github:beekeeper-studio/plugin
 ```
 
 ## Quick Start
