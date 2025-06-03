@@ -20,18 +20,6 @@ const tables = await request('getTables');
 const result = await request('runQuery', { query: 'SELECT * FROM users LIMIT 10' });
 ```
 
-## TypeScript Support
-
-The library includes comprehensive TypeScript definitions:
-
-```typescript
-import type {
-  QueryResult,
-  ThemeType,
-  GetTablesResponse
-} from '@beekeeperstudio/plugin';
-```
-
 ## Development
 
 ```bash
