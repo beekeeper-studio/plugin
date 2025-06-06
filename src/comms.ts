@@ -15,6 +15,7 @@ import type {
   ExpandTableResultResponse,
   SetTabTitleResponse,
 } from "./responseTypes";
+import { generateUUID } from "./utils";
 
 // Define a custom import.meta interface for TypeScript
 declare global {
@@ -100,7 +101,7 @@ export async function request(name: unknown, args?: unknown): Promise<unknown> {
 
   return new Promise<any>((resolve, reject) => {
     try {
-      const id = crypto.randomUUID();
+      const id = generateUUID();
       const data = { id, name, args };
       pendingRequests.set(id, { name: name as string, resolve, reject });
       window.parent.postMessage(data, "*");
