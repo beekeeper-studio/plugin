@@ -52,7 +52,17 @@ interface SetTabTitleRequest extends BaseRequest {
         title: string;
     };
 }
-type PluginRequestData = GetTablesRequest | GetColumnsRequest | GetConnectionInfoRequest | GetAllTabsRequest | RunQueryRequest | ExpandTableResultRequest | SetTabTitleRequest;
+interface GetStateRequest extends BaseRequest {
+    name: "getState";
+    args: void;
+}
+interface SetStateRequest<T extends unknown> extends BaseRequest {
+    name: "setState";
+    args: {
+        state: T;
+    };
+}
+type PluginRequestData = GetTablesRequest | GetColumnsRequest | GetConnectionInfoRequest | GetAllTabsRequest | RunQueryRequest | ExpandTableResultRequest | SetTabTitleRequest | GetStateRequest | SetStateRequest<unknown>;
 
 type TabType = string;
 type TableFilter = any;
@@ -82,9 +92,11 @@ type RunQueryResponse = {
 };
 type ExpandTableResultResponse = void;
 type SetTabTitleResponse = void;
+type GetStateResponse<T extends unknown> = T;
+type SetStateResponse = void;
 interface PluginResponseData {
     id: string;
-    result: GetTablesResponse | GetColumnsResponse | GetConnectionInfoResponse | GetAllTabsResponse | RunQueryResponse | ExpandTableResultResponse | SetTabTitleResponse;
+    result: GetTablesResponse | GetColumnsResponse | GetConnectionInfoResponse | GetAllTabsResponse | RunQueryResponse | ExpandTableResultResponse | SetTabTitleResponse | GetStateResponse<unknown> | SetStateResponse;
     error?: Error;
 }
 interface QueryTabResponse extends BaseTabResponse {
@@ -145,4 +157,4 @@ declare function notify(name: string, args: any): void;
 declare function addNotificationListener(name: string, handler: (args: any) => void): Promise<void>;
 
 export { addNotificationListener, notify, request, setDebugComms };
-export type { ExpandTableResultRequest, ExpandTableResultResponse, GetAllTabsRequest, GetAllTabsResponse, GetColumnsRequest, GetColumnsResponse, GetConnectionInfoRequest, GetConnectionInfoResponse, GetTablesRequest, GetTablesResponse, PluginNotificationData, PluginRequestData, PluginResponseData, QueryResult, RunQueryRequest, RunQueryResponse, SetTabTitleRequest, SetTabTitleResponse, TabResponse, ThemeChangedNotification, ThemeType, WindowEventClass, WindowEventInits, WindowEventNotification };
+export type { ExpandTableResultRequest, ExpandTableResultResponse, GetAllTabsRequest, GetAllTabsResponse, GetColumnsRequest, GetColumnsResponse, GetConnectionInfoRequest, GetConnectionInfoResponse, GetStateRequest, GetStateResponse, GetTablesRequest, GetTablesResponse, PluginNotificationData, PluginRequestData, PluginResponseData, QueryResult, RunQueryRequest, RunQueryResponse, SetStateRequest, SetStateResponse, SetTabTitleRequest, SetTabTitleResponse, TabResponse, ThemeChangedNotification, ThemeType, WindowEventClass, WindowEventInits, WindowEventNotification };

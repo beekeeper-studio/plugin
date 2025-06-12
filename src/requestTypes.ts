@@ -50,6 +50,18 @@ export interface SetTabTitleRequest extends BaseRequest {
   };
 }
 
+export interface GetStateRequest extends BaseRequest {
+  name: "getState";
+  args: void;
+}
+
+export interface SetStateRequest<T extends unknown> extends BaseRequest {
+  name: "setState";
+  args: {
+    state: T;
+  };
+}
+
 export type PluginRequestData =
   | GetTablesRequest
   | GetColumnsRequest
@@ -57,4 +69,6 @@ export type PluginRequestData =
   | GetAllTabsRequest
   | RunQueryRequest
   | ExpandTableResultRequest
-  | SetTabTitleRequest;
+  | SetTabTitleRequest
+  | GetStateRequest
+  | SetStateRequest<unknown>;
