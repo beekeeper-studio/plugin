@@ -153,6 +153,8 @@ declare function request(name: "getAllTabs"): Promise<GetAllTabsResponse>;
 declare function request(name: "runQuery", args: RunQueryRequest["args"]): Promise<RunQueryResponse>;
 declare function request(name: "expandTableResult", args: ExpandTableResultRequest["args"]): Promise<ExpandTableResultResponse>;
 declare function request(name: "setTabTitle", args: SetTabTitleRequest["args"]): Promise<SetTabTitleResponse>;
+declare function request<T extends unknown>(name: "getState", args: GetStateRequest["args"]): Promise<GetStateResponse<T>>;
+declare function request<T extends unknown>(name: "setState", args: SetStateRequest<T>["args"]): Promise<SetStateResponse>;
 declare function notify(name: string, args: any): void;
 declare function addNotificationListener(name: string, handler: (args: any) => void): Promise<void>;
 
