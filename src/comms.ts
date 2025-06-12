@@ -1,4 +1,3 @@
-import { request as requestDevMode } from "./devComms";
 import type {
   GetTablesRequest,
   GetColumnsRequest,
@@ -86,12 +85,6 @@ export async function request(name: "runQuery", args: RunQueryRequest["args"]): 
 export async function request(name: "expandTableResult", args: ExpandTableResultRequest["args"]): Promise<ExpandTableResultResponse>;
 export async function request(name: "setTabTitle", args: SetTabTitleRequest["args"]): Promise<SetTabTitleResponse>;
 export async function request(name: unknown, args?: unknown): Promise<unknown> {
-  if (import.meta.env?.MODE === "development") {
-    const result = await requestDevMode(name as any, args as any);
-    // console.log("result", result);
-    return result;
-  }
-
   if (debugComms) {
     const time = new Date().toLocaleTimeString("en-GB");
     console.groupCollapsed(`${time} [REQUEST] ${name}`);
