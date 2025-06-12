@@ -36,9 +36,9 @@ export type ExpandTableResultResponse = void;
 
 export type SetTabTitleResponse = void;
 
-export type GetStateResponse<T extends unknown> = T;
+export type GetViewStateResponse<T extends unknown> = T;
 
-export type SetStateResponse = void;
+export type SetViewStateResponse = void;
 
 export interface PluginResponseData {
   id: string;
@@ -50,8 +50,8 @@ export interface PluginResponseData {
     | RunQueryResponse
     | ExpandTableResultResponse
     | SetTabTitleResponse
-    | GetStateResponse<unknown>
-    | SetStateResponse;
+    | GetViewStateResponse<unknown>
+    | SetViewStateResponse;
   error?: Error;
 }
 

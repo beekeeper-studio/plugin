@@ -4,8 +4,8 @@ import type {
   RunQueryRequest,
   ExpandTableResultRequest,
   SetTabTitleRequest,
-  GetStateRequest,
-  SetStateRequest,
+  GetViewStateRequest,
+  SetViewStateRequest,
 } from "./requestTypes";
 import type {
   GetTablesResponse,
@@ -15,8 +15,8 @@ import type {
   RunQueryResponse,
   ExpandTableResultResponse,
   SetTabTitleResponse,
-  GetStateResponse,
-  SetStateResponse,
+  GetViewStateResponse,
+  SetViewStateResponse,
 } from "./responseTypes";
 import { generateUUID } from "./utils";
 
@@ -88,8 +88,8 @@ export async function request(name: "getAllTabs"): Promise<GetAllTabsResponse>;
 export async function request(name: "runQuery", args: RunQueryRequest["args"]): Promise<RunQueryResponse>;
 export async function request(name: "expandTableResult", args: ExpandTableResultRequest["args"]): Promise<ExpandTableResultResponse>;
 export async function request(name: "setTabTitle", args: SetTabTitleRequest["args"]): Promise<SetTabTitleResponse>;
-export async function request<T extends unknown>(name: "getState", args: GetStateRequest["args"]): Promise<GetStateResponse<T>>;
-export async function request<T extends unknown>(name: "setState", args: SetStateRequest<T>["args"]): Promise<SetStateResponse>;
+export async function request<T extends unknown>(name: "getViewState", args: GetViewStateRequest["args"]): Promise<GetViewStateResponse<T>>;
+export async function request<T extends unknown>(name: "setViewState", args: SetViewStateRequest<T>["args"]): Promise<SetViewStateResponse>;
 export async function request(name: unknown, args?: unknown): Promise<unknown> {
   if (debugComms) {
     const time = new Date().toLocaleTimeString("en-GB");

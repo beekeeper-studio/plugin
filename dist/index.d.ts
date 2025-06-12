@@ -52,17 +52,17 @@ interface SetTabTitleRequest extends BaseRequest {
         title: string;
     };
 }
-interface GetStateRequest extends BaseRequest {
-    name: "getState";
+interface GetViewStateRequest extends BaseRequest {
+    name: "getViewState";
     args: void;
 }
-interface SetStateRequest<T extends unknown> extends BaseRequest {
-    name: "setState";
+interface SetViewStateRequest<T extends unknown> extends BaseRequest {
+    name: "setViewState";
     args: {
         state: T;
     };
 }
-type PluginRequestData = GetTablesRequest | GetColumnsRequest | GetConnectionInfoRequest | GetAllTabsRequest | RunQueryRequest | ExpandTableResultRequest | SetTabTitleRequest | GetStateRequest | SetStateRequest<unknown>;
+type PluginRequestData = GetTablesRequest | GetColumnsRequest | GetConnectionInfoRequest | GetAllTabsRequest | RunQueryRequest | ExpandTableResultRequest | SetTabTitleRequest | GetViewStateRequest | SetViewStateRequest<unknown>;
 
 type TabType = string;
 type TableFilter = any;
@@ -92,11 +92,11 @@ type RunQueryResponse = {
 };
 type ExpandTableResultResponse = void;
 type SetTabTitleResponse = void;
-type GetStateResponse<T extends unknown> = T;
-type SetStateResponse = void;
+type GetViewStateResponse<T extends unknown> = T;
+type SetViewStateResponse = void;
 interface PluginResponseData {
     id: string;
-    result: GetTablesResponse | GetColumnsResponse | GetConnectionInfoResponse | GetAllTabsResponse | RunQueryResponse | ExpandTableResultResponse | SetTabTitleResponse | GetStateResponse<unknown> | SetStateResponse;
+    result: GetTablesResponse | GetColumnsResponse | GetConnectionInfoResponse | GetAllTabsResponse | RunQueryResponse | ExpandTableResultResponse | SetTabTitleResponse | GetViewStateResponse<unknown> | SetViewStateResponse;
     error?: Error;
 }
 interface QueryTabResponse extends BaseTabResponse {
@@ -153,10 +153,10 @@ declare function request(name: "getAllTabs"): Promise<GetAllTabsResponse>;
 declare function request(name: "runQuery", args: RunQueryRequest["args"]): Promise<RunQueryResponse>;
 declare function request(name: "expandTableResult", args: ExpandTableResultRequest["args"]): Promise<ExpandTableResultResponse>;
 declare function request(name: "setTabTitle", args: SetTabTitleRequest["args"]): Promise<SetTabTitleResponse>;
-declare function request<T extends unknown>(name: "getState", args: GetStateRequest["args"]): Promise<GetStateResponse<T>>;
-declare function request<T extends unknown>(name: "setState", args: SetStateRequest<T>["args"]): Promise<SetStateResponse>;
+declare function request<T extends unknown>(name: "getViewState", args: GetViewStateRequest["args"]): Promise<GetViewStateResponse<T>>;
+declare function request<T extends unknown>(name: "setViewState", args: SetViewStateRequest<T>["args"]): Promise<SetViewStateResponse>;
 declare function notify(name: string, args: any): void;
 declare function addNotificationListener(name: string, handler: (args: any) => void): Promise<void>;
 
 export { addNotificationListener, notify, request, setDebugComms };
-export type { ExpandTableResultRequest, ExpandTableResultResponse, GetAllTabsRequest, GetAllTabsResponse, GetColumnsRequest, GetColumnsResponse, GetConnectionInfoRequest, GetConnectionInfoResponse, GetStateRequest, GetStateResponse, GetTablesRequest, GetTablesResponse, PluginNotificationData, PluginRequestData, PluginResponseData, QueryResult, RunQueryRequest, RunQueryResponse, SetStateRequest, SetStateResponse, SetTabTitleRequest, SetTabTitleResponse, TabResponse, ThemeChangedNotification, ThemeType, WindowEventClass, WindowEventInits, WindowEventNotification };
+export type { ExpandTableResultRequest, ExpandTableResultResponse, GetAllTabsRequest, GetAllTabsResponse, GetColumnsRequest, GetColumnsResponse, GetConnectionInfoRequest, GetConnectionInfoResponse, GetTablesRequest, GetTablesResponse, GetViewStateRequest, GetViewStateResponse, PluginNotificationData, PluginRequestData, PluginResponseData, QueryResult, RunQueryRequest, RunQueryResponse, SetTabTitleRequest, SetTabTitleResponse, SetViewStateRequest, SetViewStateResponse, TabResponse, ThemeChangedNotification, ThemeType, WindowEventClass, WindowEventInits, WindowEventNotification };
