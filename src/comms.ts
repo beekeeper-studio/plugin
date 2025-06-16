@@ -6,6 +6,7 @@ import type {
   SetTabTitleRequest,
   GetViewStateRequest,
   SetViewStateRequest,
+  OpenExternalRequest,
 } from "./requestTypes";
 import type {
   GetTablesResponse,
@@ -17,6 +18,7 @@ import type {
   SetTabTitleResponse,
   GetViewStateResponse,
   SetViewStateResponse,
+  OpenExternalResponse,
 } from "./responseTypes";
 import { generateUUID } from "./utils";
 
@@ -90,6 +92,7 @@ export async function request(name: "expandTableResult", args: ExpandTableResult
 export async function request(name: "setTabTitle", args: SetTabTitleRequest["args"]): Promise<SetTabTitleResponse>;
 export async function request<T extends unknown>(name: "getViewState", args: GetViewStateRequest["args"]): Promise<GetViewStateResponse<T>>;
 export async function request<T extends unknown>(name: "setViewState", args: SetViewStateRequest<T>["args"]): Promise<SetViewStateResponse>;
+export async function request<T extends unknown>(name: "openExternal", args: OpenExternalRequest["args"]): Promise<OpenExternalResponse>;
 export async function request(name: unknown, args?: unknown): Promise<unknown> {
   if (debugComms) {
     const time = new Date().toLocaleTimeString("en-GB");

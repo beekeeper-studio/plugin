@@ -62,6 +62,13 @@ export interface SetViewStateRequest<T extends unknown> extends BaseRequest {
   };
 }
 
+export interface OpenExternalRequest extends BaseRequest {
+  name: "openExternal";
+  args: {
+    link: boolean;
+  };
+}
+
 export type PluginRequestData =
   | GetTablesRequest
   | GetColumnsRequest
@@ -71,4 +78,5 @@ export type PluginRequestData =
   | ExpandTableResultRequest
   | SetTabTitleRequest
   | GetViewStateRequest
-  | SetViewStateRequest<unknown>;
+  | SetViewStateRequest<unknown>
+  | OpenExternalRequest;

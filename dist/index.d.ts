@@ -62,7 +62,13 @@ interface SetViewStateRequest<T extends unknown> extends BaseRequest {
         state: T;
     };
 }
-type PluginRequestData = GetTablesRequest | GetColumnsRequest | GetConnectionInfoRequest | GetAllTabsRequest | RunQueryRequest | ExpandTableResultRequest | SetTabTitleRequest | GetViewStateRequest | SetViewStateRequest<unknown>;
+interface OpenExternalRequest extends BaseRequest {
+    name: "openExternal";
+    args: {
+        link: boolean;
+    };
+}
+type PluginRequestData = GetTablesRequest | GetColumnsRequest | GetConnectionInfoRequest | GetAllTabsRequest | RunQueryRequest | ExpandTableResultRequest | SetTabTitleRequest | GetViewStateRequest | SetViewStateRequest<unknown> | OpenExternalRequest;
 
 type TabType = string;
 type TableFilter = any;
@@ -94,9 +100,10 @@ type ExpandTableResultResponse = void;
 type SetTabTitleResponse = void;
 type GetViewStateResponse<T extends unknown> = T;
 type SetViewStateResponse = void;
+type OpenExternalResponse = void;
 interface PluginResponseData {
     id: string;
-    result: GetTablesResponse | GetColumnsResponse | GetConnectionInfoResponse | GetAllTabsResponse | RunQueryResponse | ExpandTableResultResponse | SetTabTitleResponse | GetViewStateResponse<unknown> | SetViewStateResponse;
+    result: GetTablesResponse | GetColumnsResponse | GetConnectionInfoResponse | GetAllTabsResponse | RunQueryResponse | ExpandTableResultResponse | SetTabTitleResponse | GetViewStateResponse<unknown> | SetViewStateResponse | OpenExternalResponse;
     error?: Error;
 }
 interface QueryTabResponse extends BaseTabResponse {
@@ -155,8 +162,9 @@ declare function request(name: "expandTableResult", args: ExpandTableResultReque
 declare function request(name: "setTabTitle", args: SetTabTitleRequest["args"]): Promise<SetTabTitleResponse>;
 declare function request<T extends unknown>(name: "getViewState", args: GetViewStateRequest["args"]): Promise<GetViewStateResponse<T>>;
 declare function request<T extends unknown>(name: "setViewState", args: SetViewStateRequest<T>["args"]): Promise<SetViewStateResponse>;
+declare function request<T extends unknown>(name: "openExternal", args: OpenExternalRequest["args"]): Promise<OpenExternalResponse>;
 declare function notify(name: string, args: any): void;
 declare function addNotificationListener(name: string, handler: (args: any) => void): Promise<void>;
 
 export { addNotificationListener, notify, request, setDebugComms };
-export type { ExpandTableResultRequest, ExpandTableResultResponse, GetAllTabsRequest, GetAllTabsResponse, GetColumnsRequest, GetColumnsResponse, GetConnectionInfoRequest, GetConnectionInfoResponse, GetTablesRequest, GetTablesResponse, GetViewStateRequest, GetViewStateResponse, PluginNotificationData, PluginRequestData, PluginResponseData, QueryResult, RunQueryRequest, RunQueryResponse, SetTabTitleRequest, SetTabTitleResponse, SetViewStateRequest, SetViewStateResponse, TabResponse, ThemeChangedNotification, ThemeType, WindowEventClass, WindowEventInits, WindowEventNotification };
+export type { ExpandTableResultRequest, ExpandTableResultResponse, GetAllTabsRequest, GetAllTabsResponse, GetColumnsRequest, GetColumnsResponse, GetConnectionInfoRequest, GetConnectionInfoResponse, GetTablesRequest, GetTablesResponse, GetViewStateRequest, GetViewStateResponse, OpenExternalRequest, OpenExternalResponse, PluginNotificationData, PluginRequestData, PluginResponseData, QueryResult, RunQueryRequest, RunQueryResponse, SetTabTitleRequest, SetTabTitleResponse, SetViewStateRequest, SetViewStateResponse, TabResponse, ThemeChangedNotification, ThemeType, WindowEventClass, WindowEventInits, WindowEventNotification };
