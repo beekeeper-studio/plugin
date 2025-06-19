@@ -6,11 +6,18 @@
   "types": "dist/index.d.ts",
   "files": [
     "dist/*.js",
-    "dist/*.d.ts"
+    "dist/*.d.ts",
+    "dist/*.js.map",
+    "README.md",
+    "LICENSE"
   ],
   "scripts": {
     "build": "rollup -c",
-    "prepublishOnly": "yarn run build"
+    "prepublishOnly": "yarn run build",
+    "clean": "rm -rf dist"
+  },
+  "publishConfig": {
+    "access": "public"
   },
   "repository": {
     "type": "git",

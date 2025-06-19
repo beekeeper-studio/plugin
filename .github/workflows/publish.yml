@@ -1,0 +1,52 @@
+name: Publish Packages to npm
+
+on:
+  push:
+    tags:
+      - 'v*' # Run on any tag that starts with v (e.g., v1.0.0)
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          registry-url: 'https://registry.npmjs.org/'
+          scope: '@beekeeperstudio'
+
+      - name: Get tag version
+        id: get_version
+        run: echo "VERSION=${GITHUB_REF#refs/tags/v}" >> $GITHUB_ENV
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Update package version
+        run: |
+          yarn version --new-version $VERSION --no-git-tag-version
+
+      - name: Build packages
+        run: yarn build
+
+      - name: Publish package
+        run: yarn publish --access public --non-interactive
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      # Create GitHub release for this version
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v1
+        with:
+          name: Release ${{ env.VERSION }}
+          body: |
+            # Beekeeper Studio Plugin v${{ env.VERSION }}
+            
+            Published package:
+            - @beekeeperstudio/plugin@${{ env.VERSION }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
