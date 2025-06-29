@@ -7,6 +7,10 @@ import type {
   GetViewStateRequest,
   SetViewStateRequest,
   OpenExternalRequest,
+  GetEncryptedDataRequest,
+  SetEncryptedDataRequest,
+  GetDataRequest,
+  SetDataRequest,
 } from "./requestTypes";
 import type {
   GetTablesResponse,
@@ -19,6 +23,10 @@ import type {
   GetViewStateResponse,
   SetViewStateResponse,
   OpenExternalResponse,
+  GetEncryptedDataResponse,
+  SetEncryptedDataResponse,
+  GetDataResponse,
+  SetDataResponse,
 } from "./responseTypes";
 import { generateUUID } from "./utils";
 
@@ -93,6 +101,10 @@ export async function request(name: "setTabTitle", args: SetTabTitleRequest["arg
 export async function request<T extends unknown>(name: "getViewState", args: GetViewStateRequest["args"]): Promise<GetViewStateResponse<T>>;
 export async function request<T extends unknown>(name: "setViewState", args: SetViewStateRequest<T>["args"]): Promise<SetViewStateResponse>;
 export async function request<T extends unknown>(name: "openExternal", args: OpenExternalRequest["args"]): Promise<OpenExternalResponse>;
+export async function request<T extends unknown>(name: "getData", args: GetDataRequest["args"]): Promise<GetDataResponse<T>>;
+export async function request<T extends unknown>(name: "setData", args: SetDataRequest<T>["args"]): Promise<SetDataResponse>;
+export async function request<T extends unknown>(name: "getEncryptedData", args: GetEncryptedDataRequest["args"]): Promise<GetEncryptedDataResponse<T>>;
+export async function request<T extends unknown>(name: "setEncryptedData", args: SetEncryptedDataRequest<T>["args"]): Promise<SetEncryptedDataResponse>;
 export async function request(name: unknown, args?: unknown): Promise<unknown> {
   if (debugComms) {
     const time = new Date().toLocaleTimeString("en-GB");

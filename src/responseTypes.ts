@@ -42,6 +42,14 @@ export type SetViewStateResponse = void;
 
 export type OpenExternalResponse = void;
 
+export type GetDataResponse<T extends unknown> = T;
+
+export type SetDataResponse = void;
+
+export type GetEncryptedDataResponse<T extends unknown> = T;
+
+export type SetEncryptedDataResponse = void;
+
 export interface PluginResponseData {
   id: string;
   result:
@@ -54,7 +62,11 @@ export interface PluginResponseData {
     | SetTabTitleResponse
     | GetViewStateResponse<unknown>
     | SetViewStateResponse
-    | OpenExternalResponse;
+    | OpenExternalResponse
+    | GetDataResponse<unknown>
+    | SetDataResponse
+    | GetEncryptedDataResponse<unknown>
+    | SetEncryptedDataResponse;
   error?: Error;
 }
 

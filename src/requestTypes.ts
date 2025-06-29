@@ -69,6 +69,26 @@ export interface OpenExternalRequest extends BaseRequest {
   };
 }
 
+export interface SetDataRequest<T extends unknown> extends BaseRequest {
+  name: "setData";
+  args: T;
+}
+
+export interface GetDataRequest extends BaseRequest {
+  name: "getData";
+  args: void;
+}
+
+export interface GetEncryptedDataRequest extends BaseRequest {
+  name: "getEncryptedData";
+  args: void;
+}
+
+export interface SetEncryptedDataRequest<T extends unknown> extends BaseRequest {
+  name: "setEncryptedData";
+  args: T;
+}
+
 export type PluginRequestData =
   | GetTablesRequest
   | GetColumnsRequest
@@ -79,4 +99,8 @@ export type PluginRequestData =
   | SetTabTitleRequest
   | GetViewStateRequest
   | SetViewStateRequest<unknown>
-  | OpenExternalRequest;
+  | OpenExternalRequest
+  | GetDataRequest
+  | SetDataRequest<unknown>
+  | GetEncryptedDataRequest
+  | SetEncryptedDataRequest<unknown>;
