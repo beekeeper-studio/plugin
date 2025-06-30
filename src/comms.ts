@@ -1,33 +1,4 @@
-import type {
-  GetTablesRequest,
-  GetColumnsRequest,
-  RunQueryRequest,
-  ExpandTableResultRequest,
-  SetTabTitleRequest,
-  GetViewStateRequest,
-  SetViewStateRequest,
-  OpenExternalRequest,
-  GetEncryptedDataRequest,
-  SetEncryptedDataRequest,
-  GetDataRequest,
-  SetDataRequest,
-} from "./requestTypes";
-import type {
-  GetTablesResponse,
-  GetColumnsResponse,
-  GetConnectionInfoResponse,
-  GetAllTabsResponse,
-  RunQueryResponse,
-  ExpandTableResultResponse,
-  SetTabTitleResponse,
-  GetViewStateResponse,
-  SetViewStateResponse,
-  OpenExternalResponse,
-  GetEncryptedDataResponse,
-  SetEncryptedDataResponse,
-  GetDataResponse,
-  SetDataResponse,
-} from "./responseTypes";
+import type { PluginRequestPayload } from "./requestTypes";
 import { generateUUID } from "./utils";
 
 // Define a custom import.meta interface for TypeScript
@@ -42,7 +13,8 @@ declare global {
 const pendingRequests = new Map<
   string,
   {
-    name: string;
+    // The whole payload is kept just in case for debugging
+    payload: PluginRequestPayload;
     resolve: (value: any) => void;
     reject: (reason?: any) => void;
   }
@@ -72,12 +44,12 @@ window.addEventListener("message", (event) => {
   }
 
   if (id && pendingRequests.has(id)) {
-    const { resolve, reject, name } = pendingRequests.get(id)!;
+    const { resolve, reject, payload } = pendingRequests.get(id)!;
     pendingRequests.delete(id);
 
     if (debugComms) {
       const time = new Date().toLocaleTimeString("en-GB");
-      console.groupCollapsed(`${time} [RESPONSE] ${name}`);
+      console.groupCollapsed(`${time} [RESPONSE] ${payload.name}`);
       console.log("Result:", result);
       if (error) console.error("Error:", error);
       console.groupEnd();
@@ -91,34 +63,23 @@ window.addEventListener("message", (event) => {
   }
 });
 
-export async function request(name: "getTables", args?: GetTablesRequest["args"]): Promise<GetTablesResponse>;
-export async function request(name: "getColumns", args: GetColumnsRequest["args"]): Promise<GetColumnsResponse>;
-export async function request(name: "getConnectionInfo"): Promise<GetConnectionInfoResponse>;
-export async function request(name: "getAllTabs"): Promise<GetAllTabsResponse>;
-export async function request(name: "runQuery", args: RunQueryRequest["args"]): Promise<RunQueryResponse>;
-export async function request(name: "expandTableResult", args: ExpandTableResultRequest["args"]): Promise<ExpandTableResultResponse>;
-export async function request(name: "setTabTitle", args: SetTabTitleRequest["args"]): Promise<SetTabTitleResponse>;
-export async function request<T extends unknown>(name: "getViewState", args: GetViewStateRequest["args"]): Promise<GetViewStateResponse<T>>;
-export async function request<T extends unknown>(name: "setViewState", args: SetViewStateRequest<T>["args"]): Promise<SetViewStateResponse>;
-export async function request<T extends unknown>(name: "openExternal", args: OpenExternalRequest["args"]): Promise<OpenExternalResponse>;
-export async function request<T extends unknown>(name: "getData", args: GetDataRequest["args"]): Promise<GetDataResponse<T>>;
-export async function request<T extends unknown>(name: "setData", args: SetDataRequest<T>["args"]): Promise<SetDataResponse>;
-export async function request<T extends unknown>(name: "getEncryptedData", args: GetEncryptedDataRequest["args"]): Promise<GetEncryptedDataResponse<T>>;
-export async function request<T extends unknown>(name: "setEncryptedData", args: SetEncryptedDataRequest<T>["args"]): Promise<SetEncryptedDataResponse>;
-export async function request(name: unknown, args?: unknown): Promise<unknown> {
+export async function request(payload: any): Promise<any> {
+  const fullPayload = {
+    id: generateUUID(),
+    ...payload,
+  } as PluginRequestPayload;
+
   if (debugComms) {
     const time = new Date().toLocaleTimeString("en-GB");
-    console.groupCollapsed(`${time} [REQUEST] ${name}`);
-    console.log("Args:", args);
+    console.groupCollapsed(`${time} [REQUEST] ${payload.name}`);
+    console.log("Args:", payload.args);
     console.groupEnd();
   }
 
   return new Promise<any>((resolve, reject) => {
     try {
-      const id = generateUUID();
-      const data = { id, name, args };
-      pendingRequests.set(id, { name: name as string, resolve, reject });
-      window.parent.postMessage(data, "*");
+      pendingRequests.set(fullPayload.id, { payload: fullPayload, resolve, reject });
+      window.parent.postMessage(payload, "*");
     } catch (e) {
       reject(e);
     }

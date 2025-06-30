@@ -104,3 +104,5 @@ export type PluginRequestData =
   | SetDataRequest<unknown>
   | GetEncryptedDataRequest
   | SetEncryptedDataRequest<unknown>;
+
+export type PluginRequestPayload = PluginRequestData;

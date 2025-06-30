@@ -1,25 +1,25 @@
 # @beekeeperstudio/plugin
 
-A TypeScript wrapper library for building Beekeeper Studio plugins that enables communication between your plugin and the main application.
+A tiny wrapper of `window.postMessage` for building Beekeeper Studio plugins with TypeScript support.
 
 ## Installation
 
 ```bash
-npm install github:beekeeper-studio/plugin
+npm install @beekeeperstudio/plugin
 # or
-yarn add github:beekeeper-studio/plugin
+yarn add @beekeeperstudio/plugin
 ```
 
 ## Quick Start
 
 ```typescript
-import { request, notify } from '@beekeeperstudio/plugin';
+import { getTables, runQuery } from '@beekeeperstudio/plugin';
 
 // Get all tables in the current database
-const tables = await request('getTables');
+const tables = await getTables();
 
 // Run a SQL query
-const result = await request('runQuery', { query: 'SELECT * FROM users LIMIT 10' });
+const result = await runQuery({ query: 'SELECT * FROM users LIMIT 10' });
 ```
 
 ## Development
