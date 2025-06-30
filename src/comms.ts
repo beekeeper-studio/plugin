@@ -63,22 +63,21 @@ window.addEventListener("message", (event) => {
   }
 });
 
-export async function request(payload: any): Promise<any> {
-  const fullPayload = {
-    id: generateUUID(),
-    ...payload,
-  } as PluginRequestPayload;
+export async function request(raw: any): Promise<any> {
+  const payload = { id: generateUUID(), ...raw } as PluginRequestPayload;
 
   if (debugComms) {
     const time = new Date().toLocaleTimeString("en-GB");
     console.groupCollapsed(`${time} [REQUEST] ${payload.name}`);
-    console.log("Args:", payload.args);
+    console.log("id:", payload.id);
+    console.log("args:", payload.args);
+    console.log("payload:", payload);
     console.groupEnd();
   }
 
   return new Promise<any>((resolve, reject) => {
     try {
-      pendingRequests.set(fullPayload.id, { payload: fullPayload, resolve, reject });
+      pendingRequests.set(payload.id, { payload: payload, resolve, reject });
       window.parent.postMessage(payload, "*");
     } catch (e) {
       reject(e);
@@ -87,13 +86,15 @@ export async function request(payload: any): Promise<any> {
 }
 
 export function notify(name: string, args: any) {
+  const payload = { name, args }
   if (debugComms) {
     const time = new Date().toLocaleTimeString("en-GB");
     console.groupCollapsed(`${time} [NOTIFICATION] ${name}`);
-    console.log("Args:", args);
+    console.log("args:", args);
+    console.log("payload:", payload);
     console.groupEnd();
   }
-  window.parent.postMessage({ name, args }, "*");
+  window.parent.postMessage(payload, "*");
 }
 
 const notificationListeners = new Map<string, ((args: any) => void)[]>();
