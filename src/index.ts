@@ -56,7 +56,7 @@ export async function setTabTitle(title: string): Promise<SetTabTitleResponse['r
 }
 
 export async function getViewState<T>(): Promise<GetViewStateResponse<T>['result']> {
-  return await request({ name: "getViewState", args: void  });
+  return await request({ name: "getViewState", args: void 0 });
 }
 
 export async function setViewState<T>(state: T): Promise<SetViewStateResponse['result']> {
