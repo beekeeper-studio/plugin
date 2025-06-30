@@ -71,22 +71,32 @@ export interface OpenExternalRequest extends BaseRequest {
 
 export interface SetDataRequest<T extends unknown> extends BaseRequest {
   name: "setData";
-  args: T;
+  args: {
+    key: string;
+    value: T;
+  };
 }
 
 export interface GetDataRequest extends BaseRequest {
   name: "getData";
-  args: void;
+  args: {
+    key: string;
+  };
 }
 
 export interface GetEncryptedDataRequest extends BaseRequest {
   name: "getEncryptedData";
-  args: void;
+  args: {
+    key: string;
+  };
 }
 
 export interface SetEncryptedDataRequest<T extends unknown> extends BaseRequest {
   name: "setEncryptedData";
-  args: T;
+  args: {
+    key: string;
+    value: T;
+  };
 }
 
 export type PluginRequestData =
