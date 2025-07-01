@@ -18,6 +18,16 @@ export interface WindowEventNotification {
   };
 }
 
+export interface PluginErrorNotification {
+  name: "pluginError";
+  args: {
+    name?: string;
+    message?: string;
+    stack?: string;
+  };
+}
+
 export type PluginNotificationData =
   | ThemeChangedNotification
-  | WindowEventNotification;
+  | WindowEventNotification
+  | PluginErrorNotification;

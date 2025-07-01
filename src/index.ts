@@ -115,6 +115,26 @@ export async function setEncryptedData<T>(keyOrValue: string | T, value?: T): Pr
   }
 }
 
+/** Clipboard interface. */
+export const clipboard = {
+  /** Write text to the Electron clipboard. */
+  async writeText(text: string): Promise<void> {
+    await request({
+      name: "clipboard.writeText",
+      args: { text },
+    });
+  },
+  /** Read text from the Electron clipboard. */
+  async readText(): Promise<string> {
+    return await request({
+      name: "clipboard.readText",
+      args: void 0,
+    });
+  },
+  // async write() {},
+  // async read() {},
+};
+
 export * from "./commonTypes";
 export * from "./requestTypes";
 export * from "./responseTypes";

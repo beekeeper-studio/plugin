@@ -79,6 +79,14 @@ export interface SetEncryptedDataResponse extends BaseResponse {
   result: void;
 }
 
+export interface ClipboardWriteTextResponse extends BaseResponse {
+  result: void;
+}
+
+export interface ClipboardReadTextResponse extends BaseResponse {
+  result: string;
+}
+
 export type PluginResponseData =
   | GetTablesResponse
   | GetColumnsResponse
@@ -93,7 +101,9 @@ export type PluginResponseData =
   | GetDataResponse<unknown>
   | SetDataResponse
   | GetEncryptedDataResponse<unknown>
-  | SetEncryptedDataResponse;
+  | SetEncryptedDataResponse
+  | ClipboardWriteTextResponse
+  | ClipboardReadTextResponse;
 
 export type PluginResponsePayload = PluginResponseData;
 

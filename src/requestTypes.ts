@@ -99,6 +99,18 @@ export interface SetEncryptedDataRequest<T extends unknown> extends BaseRequest 
   };
 }
 
+export interface ClipboardWriteTextRequest extends BaseRequest {
+  name: "clipboard.writeText";
+  args: {
+    text: string;
+  };
+}
+
+export interface ClipboardReadTextRequest extends BaseRequest {
+  name: "clipboard.readText";
+  args: void;
+}
+
 export type PluginRequestData =
   | GetTablesRequest
   | GetColumnsRequest
@@ -113,6 +125,8 @@ export type PluginRequestData =
   | GetDataRequest
   | SetDataRequest<unknown>
   | GetEncryptedDataRequest
-  | SetEncryptedDataRequest<unknown>;
+  | SetEncryptedDataRequest<unknown>
+  | ClipboardWriteTextRequest
+  | ClipboardReadTextRequest;
 
 export type PluginRequestPayload = PluginRequestData;

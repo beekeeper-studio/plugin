@@ -33,7 +33,25 @@ jobs:
       - name: Build packages
         run: yarn build
 
-      - name: Publish package
+      - name: Check if beta version
+        id: check_beta
+        run: |
+          if [[ "$VERSION" == *"beta"* ]]; then
+            echo "IS_BETA=true" >> $GITHUB_ENV
+            echo "Publishing as beta version"
+          else
+            echo "IS_BETA=false" >> $GITHUB_ENV
+            echo "Publishing as stable version"
+          fi
+
+      - name: Publish package (beta)
+        if: env.IS_BETA == 'true'
+        run: yarn publish --access public --non-interactive --tag beta
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Publish package (stable)
+        if: env.IS_BETA == 'false'
         run: yarn publish --access public --non-interactive
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
