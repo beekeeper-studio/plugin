@@ -63,7 +63,7 @@ export async function setViewState<T>(state: T): Promise<SetViewStateResponse['r
   return await request({ name: "setViewState", args: { state } as SetViewStateRequest<T>['args'] });
 }
 
-export async function openExternal(link: boolean): Promise<OpenExternalResponse['result']> {
+export async function openExternal(link: string): Promise<OpenExternalResponse['result']> {
   return await request({ name: "openExternal", args: { link } as OpenExternalRequest['args'] });
 }
 

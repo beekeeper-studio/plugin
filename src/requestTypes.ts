@@ -65,7 +65,7 @@ export interface SetViewStateRequest<T extends unknown> extends BaseRequest {
 export interface OpenExternalRequest extends BaseRequest {
   name: "openExternal";
   args: {
-    link: boolean;
+    link: string;
   };
 }
 
