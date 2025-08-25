@@ -111,6 +111,37 @@ export interface ClipboardReadTextRequest extends BaseRequest {
   args: void;
 }
 
+export type OpenQueryTabRequest = BaseRequest & {
+  name: "openTab";
+  args: {
+    type: "query";
+    query: string;
+  };
+}
+
+export type OpenTableTableTabRequest = BaseRequest & {
+  name: "openTab";
+  args: {
+    type: "tableTable";
+    table: string;
+    schema?: string;
+  };
+}
+
+export type OpenTableStructureTabRequest = BaseRequest & {
+  name: "openTab";
+  args: {
+    type: "tableStructure";
+    table: string;
+    schema?: string;
+  };
+}
+
+export type OpenTabRequest =
+  | OpenQueryTabRequest
+  | OpenTableTableTabRequest
+  | OpenTableStructureTabRequest;
+
 export type PluginRequestData =
   | GetTablesRequest
   | GetColumnsRequest
@@ -127,6 +158,9 @@ export type PluginRequestData =
   | GetEncryptedDataRequest
   | SetEncryptedDataRequest<unknown>
   | ClipboardWriteTextRequest
-  | ClipboardReadTextRequest;
+  | ClipboardReadTextRequest
+  | OpenQueryTabRequest
+  | OpenTableTableTabRequest
+  | OpenTableStructureTabRequest;
 
 export type PluginRequestPayload = PluginRequestData;

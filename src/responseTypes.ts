@@ -87,6 +87,10 @@ export interface ClipboardReadTextResponse extends BaseResponse {
   result: string;
 }
 
+export interface OpenTabResponse extends BaseResponse {
+  result: void;
+}
+
 export type PluginResponseData =
   | GetTablesResponse
   | GetColumnsResponse
@@ -103,7 +107,8 @@ export type PluginResponseData =
   | GetEncryptedDataResponse<unknown>
   | SetEncryptedDataResponse
   | ClipboardWriteTextResponse
-  | ClipboardReadTextResponse;
+  | ClipboardReadTextResponse
+  | OpenTabResponse;
 
 export type PluginResponsePayload = PluginResponseData;
 
