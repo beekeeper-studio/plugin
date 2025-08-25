@@ -19,3 +19,11 @@ export type WindowEventInits =
   | MouseEventInit
   | KeyboardEventInit
   | PointerEventInit;
+
+export type TableFilter = {
+  field: string;
+  type: "=" | "!=" | "like" | "not like" | "<" | "<=" | ">" | ">=" | "in" | "is" | "is not";
+  value?: string | string[];
+  op?: 'AND' | 'OR';
+}
+

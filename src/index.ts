@@ -120,10 +120,10 @@ export async function setEncryptedData<T>(keyOrValue: string | T, value?: T): Pr
   }
 }
 
-export async function openTab(type: "query", args: Omit<OpenQueryTabRequest['args'], 'type'>): Promise<OpenTabResponse>;
+export async function openTab(type: "query", args?: Omit<OpenQueryTabRequest['args'], 'type'>): Promise<OpenTabResponse>;
 export async function openTab(type: "tableTable", args: Omit<OpenTableTableTabRequest['args'], 'type'>): Promise<OpenTabResponse>;
 export async function openTab(type: "tableStructure", args: Omit<OpenTableStructureTabRequest['args'], 'type'>): Promise<OpenTabResponse>;
-export async function openTab(type: OpenTabRequest['args']['type'], args: Omit<OpenTabRequest['args'], 'type'>): Promise<OpenTabResponse> {
+export async function openTab(type: OpenTabRequest['args']['type'], args?: Omit<OpenTabRequest['args'], 'type'>): Promise<OpenTabResponse> {
   return await request({ name: "openTab", args: { type, ...args } });
 }
 

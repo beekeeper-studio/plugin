@@ -1,4 +1,4 @@
-import { QueryResult } from "./commonTypes";
+import { QueryResult, TableFilter } from "./commonTypes";
 
 interface BaseRequest {
   id: string;
@@ -115,7 +115,7 @@ export type OpenQueryTabRequest = BaseRequest & {
   name: "openTab";
   args: {
     type: "query";
-    query: string;
+    query?: string;
   };
 }
 
@@ -125,6 +125,7 @@ export type OpenTableTableTabRequest = BaseRequest & {
     type: "tableTable";
     table: string;
     schema?: string;
+    filters?: TableFilter[];
   };
 }
 
