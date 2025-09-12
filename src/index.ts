@@ -13,12 +13,12 @@ import type {
   OpenQueryTabRequest,
   OpenTableTableTabRequest,
   OpenTableStructureTabRequest,
+  GetTableKeysRequest,
 } from "./requestTypes";
 import type {
   GetTablesResponse,
   GetColumnsResponse,
   GetConnectionInfoResponse,
-  GetAllTabsResponse,
   RunQueryResponse,
   ExpandTableResultResponse,
   SetTabTitleResponse,
@@ -30,48 +30,113 @@ import type {
   GetEncryptedDataResponse,
   SetEncryptedDataResponse,
   OpenTabResponse,
+  GetTableKeysResponse,
+  GetAppInfoResponse,
+  CheckForUpdateResponse,
 } from "./responseTypes";
 
+/**
+ * Get a list of tables from the current database.
+ * @since Beekeeper Studio 5.3.0
+ **/
 export async function getTables(schema?: string): Promise<GetTablesResponse['result']> {
   return await request({ name: "getTables", args: { schema } as GetTablesRequest['args'] });
 }
 
+/**
+ * Get a list of columns from a table.
+ *
+ * @since Beekeeper Studio 5.3.0
+ **/
 export async function getColumns(table: string, schema?: string): Promise<GetColumnsResponse['result']> {
   return await request({ name: "getColumns", args: { table, schema } as GetColumnsRequest['args'] });
 }
 
+/** @since Beekeeper Studio 5.4.0 */
+export async function getTableKeys(table: string, schema?: string): Promise<GetTableKeysResponse['result']> {
+  return await request({ name: "getTableKeys", args: { table, schema } as GetTableKeysRequest['args'] });
+}
+
+/**
+ * Get information about the current database connection.
+ *
+ * @since Beekeeper Studio 5.3.0
+ **/
 export async function getConnectionInfo(): Promise<GetConnectionInfoResponse['result']> {
   return await request({ name: "getConnectionInfo", args: void 0 });
 }
 
-export async function getAllTabs(): Promise<GetAllTabsResponse['result']> {
-  return await request({ name: "getAllTabs", args: void 0 });
+/** @since Beekeeper Studio 5.4.0 */
+export async function getAppInfo(): Promise<GetAppInfoResponse['result']> {
+  return await request({ name: "getAppInfo", args: void 0 });
 }
 
+/**
+ * Check if plugin's update is available.
+ *
+ * @since Beekeeper Studio 5.4.0
+ **/
+export async function checkForUpdate(): Promise<CheckForUpdateResponse['result']> {
+  return await request({ name: "checkForUpdate", args: void 0 });
+}
+
+/**
+ * Execute a SQL query against the current database.
+ *
+ * WARNING: The query will be executed exactly as provided with no modification
+ * or sanitization. Always validate and sanitize user input before including it
+ * in queries to prevent unwanted actions.
+ *
+ * @since Beekeeper Studio 5.3.0
+ **/
 export async function runQuery(query: string): Promise<RunQueryResponse['result']> {
   return await request({ name: "runQuery", args: { query } as RunQueryRequest['args'] });
 }
 
+/**
+ * Display query results in the bottom table panel (shell-type tabs only).
+ *
+ * @since Beekeeper Studio 5.3.0
+ **/
 export async function expandTableResult(results: any[]): Promise<ExpandTableResultResponse['result']> {
   return await request({ name: "expandTableResult", args: { results } as ExpandTableResultRequest['args'] });
 }
 
+/**
+ * Set the title of the current plugin tab.
+ *
+ * @since Beekeeper Studio 5.3.0
+ **/
 export async function setTabTitle(title: string): Promise<SetTabTitleResponse['result']> {
   return await request({ name: "setTabTitle", args: { title } as SetTabTitleRequest['args'] });
 }
 
+/**
+ * Get the current state of your view instance.
+ *
+ * @see {@link https://docs.beekeeperstudio.io/plugin_development/plugin-views/#view-state|View State}
+ * @since Beekeeper Studio 5.3.0
+ **/
 export async function getViewState<T>(): Promise<GetViewStateResponse<T>['result']> {
   return await request({ name: "getViewState", args: void 0 });
 }
 
+/**
+ * Set the state of your view instance.
+ *
+ * @see {@link https://docs.beekeeperstudio.io/plugin_development/plugin-views/#view-state|View State}
+ * @since Beekeeper Studio 5.3.0
+ **/
 export async function setViewState<T>(state: T): Promise<SetViewStateResponse['result']> {
   return await request({ name: "setViewState", args: { state } as SetViewStateRequest<T>['args'] });
 }
 
+/** @since Beekeeper Studio 5.3.0 */
 export async function openExternal(link: string): Promise<OpenExternalResponse['result']> {
   return await request({ name: "openExternal", args: { link } as OpenExternalRequest['args'] });
 }
 
+/** @since Beekeeper Studio 5.3.0 */
 export async function getData<T>(key: string = "default"): Promise<GetDataResponse<T>['result']> {
   return await request({ name: "getData", args: { key } });
 }
@@ -85,6 +150,8 @@ export async function getData<T>(key: string = "default"): Promise<GetDataRespon
  * 
  * // Store with default key (equivalent to setData("default", value))
  * await setData({ name: "John" });
+ *
+ * @since Beekeeper Studio 5.3.0
  */
 export async function setData<T>(key: string, value: T): Promise<SetDataResponse['result']>;
 export async function setData<T>(value: T): Promise<SetDataResponse['result']>;
@@ -96,6 +163,7 @@ export async function setData<T>(keyOrValue: string | T, value?: T): Promise<Set
   }
 }
 
+/** @since Beekeeper Studio 5.3.0 */
 export async function getEncryptedData<T>(key: string): Promise<GetEncryptedDataResponse<T>['result']> {
   return await request({ name: "getEncryptedData", args: { key } });
 }
@@ -109,6 +177,8 @@ export async function getEncryptedData<T>(key: string): Promise<GetEncryptedData
  * 
  * // Store with default key (equivalent to setEncryptedData("default", value))
  * await setEncryptedData({ token: "abc123" });
+ *
+ * @since Beekeeper Studio 5.3.0
  */
 export async function setEncryptedData<T>(key: string, value: T): Promise<SetEncryptedDataResponse['result']>;
 export async function setEncryptedData<T>(value: T): Promise<SetEncryptedDataResponse['result']>;
@@ -120,6 +190,7 @@ export async function setEncryptedData<T>(keyOrValue: string | T, value?: T): Pr
   }
 }
 
+/** @since Beekeeper Studio 5.4.0 */
 export async function openTab(type: "query", args?: Omit<OpenQueryTabRequest['args'], 'type'>): Promise<OpenTabResponse>;
 export async function openTab(type: "tableTable", args: Omit<OpenTableTableTabRequest['args'], 'type'>): Promise<OpenTabResponse>;
 export async function openTab(type: "tableStructure", args: Omit<OpenTableStructureTabRequest['args'], 'type'>): Promise<OpenTabResponse>;

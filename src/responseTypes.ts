@@ -1,4 +1,5 @@
-import { QueryResult } from "./commonTypes";
+import { QueryResult, TableKey } from "./commonTypes";
+import { AppTheme } from "./notificationTypes";
 
 type TabType = string;
 type TableFilter = any;
@@ -23,17 +24,27 @@ export interface GetColumnsResponse extends BaseResponse {
   }[];
 }
 
+export type GetTableKeysResponse = BaseResponse & {
+  result: TableKey[];
+};
+
 export interface GetConnectionInfoResponse extends BaseResponse {
   result: {
+    /** @deprecated Use `databaseType` instead */
     connectionType: string;
+    databaseType: string;
+    databaseTypeDisplayName: string;
     databaseName: string;
     defaultSchema?: string;
     readOnlyMode: boolean;
   };
 }
 
-export interface GetAllTabsResponse extends BaseResponse {
-  result: Tab[];
+export type GetAppInfoResponse = BaseResponse & {
+  result: {
+    version: string;
+    theme: AppTheme;
+  };
 }
 
 export interface RunQueryResponse extends BaseResponse {
@@ -91,11 +102,15 @@ export interface OpenTabResponse extends BaseResponse {
   result: void;
 }
 
+export interface CheckForUpdateResponse extends BaseResponse {
+  result: boolean;
+}
+
 export type PluginResponseData =
   | GetTablesResponse
   | GetColumnsResponse
+  | GetTableKeysResponse
   | GetConnectionInfoResponse
-  | GetAllTabsResponse
   | RunQueryResponse
   | ExpandTableResultResponse
   | SetTabTitleResponse
@@ -108,13 +123,12 @@ export type PluginResponseData =
   | SetEncryptedDataResponse
   | ClipboardWriteTextResponse
   | ClipboardReadTextResponse
-  | OpenTabResponse;
+  | OpenTabResponse
+  | CheckForUpdateResponse;
 
 export type PluginResponsePayload = PluginResponseData;
 
-export type TabResponse = Tab;
-
-type Tab = BaseTabResponse | QueryTabResponse | TableTabResponse;
+export type TabResponse = BaseTabResponse | QueryTabResponse | TableTabResponse;
 
 interface BaseTabResponse {
   type: TabType;

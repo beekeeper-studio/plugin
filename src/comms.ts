@@ -1,3 +1,11 @@
+import { JsonValue } from "./commonTypes";
+import {
+  BroadcastNotification,
+  PluginErrorNotification,
+  ThemeChangedNotification,
+  ViewLoadedNotification,
+  WindowEventNotification,
+} from "./notificationTypes";
 import type { PluginRequestPayload } from "./requestTypes";
 import { generateUUID } from "./utils";
 
@@ -85,8 +93,20 @@ export async function request(raw: any): Promise<any> {
   });
 }
 
+export function notify<Message extends JsonValue = JsonValue>(
+  name: BroadcastNotification["name"],
+  args: BroadcastNotification<Message>["args"],
+): void;
+export function notify(
+  name: PluginErrorNotification["name"],
+  args: PluginErrorNotification["args"],
+): void;
+export function notify(
+  name: WindowEventNotification["name"],
+  args: WindowEventNotification["args"],
+): void;
 export function notify(name: string, args: any) {
-  const payload = { name, args }
+  const payload = { name, args };
   if (debugComms) {
     const time = new Date().toLocaleTimeString("en-GB");
     console.groupCollapsed(`${time} [NOTIFICATION] ${name}`);
@@ -99,7 +119,19 @@ export function notify(name: string, args: any) {
 
 const notificationListeners = new Map<string, ((args: any) => void)[]>();
 
-export async function addNotificationListener(
+export function addNotificationListener<Message extends JsonValue = JsonValue>(
+  name: BroadcastNotification["name"],
+  handler: (args: BroadcastNotification<Message>["args"]) => void,
+): void;
+export function addNotificationListener(
+  name: ViewLoadedNotification["name"],
+  handler: (args: ViewLoadedNotification["args"]) => void,
+): void;
+export function addNotificationListener(
+  name: ThemeChangedNotification["name"],
+  handler: (args: ThemeChangedNotification["args"]) => void,
+): void;
+export function addNotificationListener(
   name: string,
   handler: (args: any) => void,
 ) {
@@ -107,4 +139,17 @@ export async function addNotificationListener(
     notificationListeners.set(name, []);
   }
   notificationListeners.get(name)!.push(handler);
+}
+
+export function removeNotificationListener(
+  name: string,
+  handler: (args: any) => void,
+) {
+  const handlers = notificationListeners.get(name);
+  if (handlers) {
+    const index = handlers.indexOf(handler);
+    if (index > -1) {
+      handlers.splice(index, 1);
+    }
+  }
 }

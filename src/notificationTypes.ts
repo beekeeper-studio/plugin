@@ -1,33 +1,57 @@
-import { ThemeType, WindowEventInits, WindowEventClass } from "./commonTypes";
+import {
+  ThemeType,
+  WindowEventInits,
+  WindowEventClass,
+  JsonValue,
+} from "./commonTypes";
 
-export interface ThemeChangedNotification {
+export type AppTheme = {
+  palette: Record<string, string>;
+  cssString: string;
+  type: ThemeType;
+};
+
+export type ThemeChangedNotification = {
   name: "themeChanged";
-  args: {
-    palette: Record<string, string>;
-    cssString: string;
-    type: ThemeType;
-  };
-}
+  args: AppTheme;
+};
 
-export interface WindowEventNotification {
+export type WindowEventNotification = {
   name: "windowEvent";
   args: {
     eventType: string;
     eventClass: WindowEventClass;
     eventInitOptions: WindowEventInits;
   };
-}
+};
 
-export interface PluginErrorNotification {
+export type PluginErrorNotification = {
   name: "pluginError";
   args: {
     name?: string;
     message?: string;
     stack?: string;
   };
-}
+};
+
+export type BroadcastNotification<Message extends JsonValue = JsonValue> = {
+  name: "broadcast";
+  args: {
+    message: Message;
+  };
+};
+
+export type ViewLoadedNotification = {
+  name: "viewLoaded";
+  args: {
+    command: string;
+    args?: JsonValue;
+  };
+};
 
 export type PluginNotificationData =
   | ThemeChangedNotification
   | WindowEventNotification
-  | PluginErrorNotification;
+  | PluginErrorNotification
+  | ViewLoadedNotification
+  | BroadcastNotification;

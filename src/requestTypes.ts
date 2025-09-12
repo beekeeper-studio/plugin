@@ -19,13 +19,21 @@ export interface GetColumnsRequest extends BaseRequest {
   };
 }
 
-export interface GetConnectionInfoRequest extends BaseRequest {
-  name: "getConnectionInfo";
+export type GetTableKeysRequest = BaseRequest & {
+  name: "getTableKeys";
+  args: {
+    table: string;
+    schema?: string;
+  };
+};
+
+export type GetAppInfoRequest = BaseRequest & {
+  name: "getAppInfo";
   args: void;
 }
 
-export interface GetAllTabsRequest extends BaseRequest {
-  name: "getAllTabs";
+export interface GetConnectionInfoRequest extends BaseRequest {
+  name: "getConnectionInfo";
   args: void;
 }
 
@@ -126,6 +134,7 @@ export type OpenTableTableTabRequest = BaseRequest & {
     table: string;
     schema?: string;
     filters?: TableFilter[];
+    database?: string;
   };
 }
 
@@ -135,7 +144,13 @@ export type OpenTableStructureTabRequest = BaseRequest & {
     type: "tableStructure";
     table: string;
     schema?: string;
+    database?: string;
   };
+}
+
+export type CheckForUpdateRequest = BaseRequest & {
+  name: "checkForUpdate";
+  args: void;
 }
 
 export type OpenTabRequest =
@@ -146,8 +161,9 @@ export type OpenTabRequest =
 export type PluginRequestData =
   | GetTablesRequest
   | GetColumnsRequest
+  | GetTableKeysRequest
+  | GetAppInfoRequest
   | GetConnectionInfoRequest
-  | GetAllTabsRequest
   | RunQueryRequest
   | ExpandTableResultRequest
   | SetTabTitleRequest
@@ -160,8 +176,7 @@ export type PluginRequestData =
   | SetEncryptedDataRequest<unknown>
   | ClipboardWriteTextRequest
   | ClipboardReadTextRequest
-  | OpenQueryTabRequest
-  | OpenTableTableTabRequest
-  | OpenTableStructureTabRequest;
+  | OpenTabRequest
+  | CheckForUpdateRequest;
 
 export type PluginRequestPayload = PluginRequestData;

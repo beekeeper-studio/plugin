@@ -9,6 +9,19 @@ export interface QueryResult {
   rows: Record<string, unknown>[];
 }
 
+export interface TableKey {
+  isComposite: boolean;
+  toTable: string;
+  toSchema: string;
+  toColumn: string | string[];
+  fromTable: string;
+  fromSchema: string;
+  fromColumn: string | string[];
+  constraintName?: string;
+  onUpdate?: string;
+  onDelete?: string;
+}
+
 export type WindowEventClass =
   | "MouseEvent"
   | "KeyboardEvent"
@@ -27,3 +40,4 @@ export type TableFilter = {
   op?: 'AND' | 'OR';
 }
 
+export type JsonValue = string | number | boolean | null | JsonValue[] | { [key: string]: JsonValue };
