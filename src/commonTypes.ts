@@ -41,3 +41,56 @@ export type TableFilter = {
 }
 
 export type JsonValue = string | number | boolean | null | JsonValue[] | { [key: string]: JsonValue };
+
+export type ActiveRange = {
+  rows: number[];
+  columns: string[];
+  value: JsonValue[][];
+};
+
+export type CellMenuTarget = {
+  type: "cell";
+  row: number;
+  column: string;
+  value: JsonValue;
+};
+
+export type ColumnMenuTarget = {
+  type: "column";
+  column: string;
+  rows: number[];
+  value: JsonValue[];
+};
+
+export type RowMenuTarget = {
+  type: "row";
+  row: number;
+  columns: string[];
+  value: JsonValue[];
+};
+
+export type CornerMenuTarget = {
+  type: "corner";
+  rows: number[];
+  columns: string[];
+  value: JsonValue[][];
+};
+
+export type CellMenuParams = {
+  target: CellMenuTarget;
+  activeRange: ActiveRange;
+};
+
+export type ColumnMenuParams = {
+  target: ColumnMenuTarget;
+  activeRange: ActiveRange;
+};
+
+export type RowMenuParams = { target: RowMenuTarget; activeRange: ActiveRange };
+
+export type CornerMenuParams = {
+  target: CornerMenuTarget;
+  activeRange: ActiveRange;
+};
+
+export type LoadViewParams = CornerMenuParams | RowMenuParams | ColumnMenuParams | CellMenuParams;

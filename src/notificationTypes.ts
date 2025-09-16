@@ -3,6 +3,10 @@ import {
   WindowEventInits,
   WindowEventClass,
   JsonValue,
+  CellMenuParams,
+  CornerMenuParams,
+  RowMenuParams,
+  ColumnMenuParams,
 } from "./commonTypes";
 
 export type AppTheme = {
@@ -45,7 +49,11 @@ export type ViewLoadedNotification = {
   name: "viewLoaded";
   args: {
     command: string;
-    args?: JsonValue;
+    params?:
+      | CellMenuParams
+      | ColumnMenuParams
+      | RowMenuParams
+      | CornerMenuParams;
   };
 };
 
