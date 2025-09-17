@@ -1,4 +1,12 @@
-import { QueryResult, TableKey } from "./commonTypes";
+import {
+  QueryResult,
+  TableKey,
+  CellMenuParams,
+  CornerMenuParams,
+  RowMenuParams,
+  ColumnMenuParams,
+  PluginViewContext,
+} from "./commonTypes";
 import { AppTheme } from "./notificationTypes";
 
 type TabType = string;
@@ -45,7 +53,7 @@ export type GetAppInfoResponse = BaseResponse & {
     version: string;
     theme: AppTheme;
   };
-}
+};
 
 export interface RunQueryResponse extends BaseResponse {
   result: {
@@ -61,6 +69,10 @@ export interface ExpandTableResultResponse extends BaseResponse {
 export interface SetTabTitleResponse extends BaseResponse {
   result: void;
 }
+
+export type GetViewContextResponse = BaseResponse & {
+  result: PluginViewContext;
+};
 
 export interface GetViewStateResponse<T extends unknown> extends BaseResponse {
   result: T;
@@ -82,7 +94,8 @@ export interface SetDataResponse extends BaseResponse {
   result: void;
 }
 
-export interface GetEncryptedDataResponse<T extends unknown> extends BaseResponse {
+export interface GetEncryptedDataResponse<T extends unknown>
+  extends BaseResponse {
   result: T;
 }
 
@@ -114,6 +127,7 @@ export type PluginResponseData =
   | RunQueryResponse
   | ExpandTableResultResponse
   | SetTabTitleResponse
+  | GetViewContextResponse
   | GetViewStateResponse<unknown>
   | SetViewStateResponse
   | OpenExternalResponse

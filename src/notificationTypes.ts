@@ -3,10 +3,6 @@ import {
   WindowEventInits,
   WindowEventClass,
   JsonValue,
-  CellMenuParams,
-  CornerMenuParams,
-  RowMenuParams,
-  ColumnMenuParams,
 } from "./commonTypes";
 
 export type AppTheme = {
@@ -45,21 +41,8 @@ export type BroadcastNotification<Message extends JsonValue = JsonValue> = {
   };
 };
 
-export type ViewLoadedNotification = {
-  name: "viewLoaded";
-  args: {
-    command: string;
-    params?:
-      | CellMenuParams
-      | ColumnMenuParams
-      | RowMenuParams
-      | CornerMenuParams;
-  };
-};
-
 export type PluginNotificationData =
   | ThemeChangedNotification
   | WindowEventNotification
   | PluginErrorNotification
-  | ViewLoadedNotification
   | BroadcastNotification;

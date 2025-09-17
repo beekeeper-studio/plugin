@@ -35,12 +35,29 @@ export type WindowEventInits =
 
 export type TableFilter = {
   field: string;
-  type: "=" | "!=" | "like" | "not like" | "<" | "<=" | ">" | ">=" | "in" | "is" | "is not";
+  type:
+    | "="
+    | "!="
+    | "like"
+    | "not like"
+    | "<"
+    | "<="
+    | ">"
+    | ">="
+    | "in"
+    | "is"
+    | "is not";
   value?: string | string[];
-  op?: 'AND' | 'OR';
-}
+  op?: "AND" | "OR";
+};
 
-export type JsonValue = string | number | boolean | null | JsonValue[] | { [key: string]: JsonValue };
+export type JsonValue =
+  | string
+  | number
+  | boolean
+  | null
+  | JsonValue[]
+  | { [key: string]: JsonValue };
 
 export type ActiveRange = {
   rows: number[];
@@ -93,4 +110,13 @@ export type CornerMenuParams = {
   activeRange: ActiveRange;
 };
 
-export type LoadViewParams = CornerMenuParams | RowMenuParams | ColumnMenuParams | CellMenuParams;
+export type LoadViewParams =
+  | CornerMenuParams
+  | RowMenuParams
+  | ColumnMenuParams
+  | CellMenuParams;
+
+export type PluginViewContext = {
+  command: string;
+  params?: CellMenuParams | ColumnMenuParams | RowMenuParams | CornerMenuParams;
+};

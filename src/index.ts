@@ -33,6 +33,7 @@ import type {
   GetTableKeysResponse,
   GetAppInfoResponse,
   CheckForUpdateResponse,
+  GetViewContextResponse,
 } from "./responseTypes";
 
 /**
@@ -109,6 +110,20 @@ export async function expandTableResult(results: any[]): Promise<ExpandTableResu
  **/
 export async function setTabTitle(title: string): Promise<SetTabTitleResponse['result']> {
   return await request({ name: "setTabTitle", args: { title } as SetTabTitleRequest['args'] });
+}
+
+/**
+ * Get the current view context.
+ *
+ * A view context describes how this plugin view was opened and what data is
+ * available for it. It always includes the static `command` from your
+ * `manifest.json`, and may also include dynamic `params` depending on where
+ * the menu was invoked.
+ *
+ * @since Beekeeper Studio 5.4.0
+ **/
+export async function getViewContext(): Promise<GetViewContextResponse['result']> {
+  return await request({ name: "getViewContext", args: void 0 });
 }
 
 /**

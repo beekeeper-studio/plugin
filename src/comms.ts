@@ -3,7 +3,6 @@ import {
   BroadcastNotification,
   PluginErrorNotification,
   ThemeChangedNotification,
-  ViewLoadedNotification,
   WindowEventNotification,
 } from "./notificationTypes";
 import type { PluginRequestPayload } from "./requestTypes";
@@ -122,10 +121,6 @@ const notificationListeners = new Map<string, ((args: any) => void)[]>();
 export function addNotificationListener<Message extends JsonValue = JsonValue>(
   name: BroadcastNotification["name"],
   handler: (args: BroadcastNotification<Message>["args"]) => void,
-): void;
-export function addNotificationListener(
-  name: ViewLoadedNotification["name"],
-  handler: (args: ViewLoadedNotification["args"]) => void,
 ): void;
 export function addNotificationListener(
   name: ThemeChangedNotification["name"],

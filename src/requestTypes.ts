@@ -58,6 +58,11 @@ export interface SetTabTitleRequest extends BaseRequest {
   };
 }
 
+export type GetViewContextRequest = BaseRequest & {
+  name: "getViewContext";
+  args: void;
+};
+
 export interface GetViewStateRequest extends BaseRequest {
   name: "getViewState";
   args: void;
@@ -167,6 +172,7 @@ export type PluginRequestData =
   | RunQueryRequest
   | ExpandTableResultRequest
   | SetTabTitleRequest
+  | GetViewContextRequest
   | GetViewStateRequest
   | SetViewStateRequest<unknown>
   | OpenExternalRequest
