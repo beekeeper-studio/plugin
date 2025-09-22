@@ -29,8 +29,8 @@ const pendingRequests = new Map<
 
 let debugComms = false;
 
-export function setDebugComms(value: boolean) {
-  debugComms = value;
+export function setDebugComms(enabled: boolean) {
+  debugComms = enabled;
 }
 
 window.addEventListener("message", (event) => {

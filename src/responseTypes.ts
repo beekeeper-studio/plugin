@@ -40,7 +40,7 @@ export interface GetConnectionInfoResponse extends BaseResponse {
   result: {
     /** @deprecated Use `databaseType` instead */
     connectionType: string;
-    databaseType: string;
+    databaseType: 'postgresql' | 'mysql' | 'mariadb' | 'sqlite' | 'sqlserver' | 'oracle' | 'mongodb' | 'cassandra' | 'clickhouse' | 'firebird' | 'bigquery' | 'redshift' | 'duckdb' | 'libsql' | 'redis' | 'surrealdb' | 'trino';
     databaseTypeDisplayName: string;
     databaseName: string;
     defaultSchema?: string;

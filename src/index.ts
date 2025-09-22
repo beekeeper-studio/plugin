@@ -1,4 +1,5 @@
-import { request } from "./comms";
+import { JsonValue } from "./commonTypes";
+import { addNotificationListener, notify, request } from "./comms";
 import type {
   GetTablesRequest,
   GetColumnsRequest,
@@ -213,7 +214,34 @@ export async function openTab(type: OpenTabRequest['args']['type'], args?: Omit<
   return await request({ name: "openTab", args: { type, ...args } });
 }
 
-/** Clipboard interface. */
+/** @since Beekeeper Studio 5.4.0 */
+export const broadcast = {
+  post<T extends JsonValue = JsonValue>(message: T) {
+    return notify("broadcast", { message });
+  },
+  on<T extends JsonValue = JsonValue>(handler: (message: T) => void) {
+    addNotificationListener<T>("broadcast", (params) => {
+      handler(params.message);
+    });
+  },
+}
+
+/** @since Beekeeper Studio 5.3.0 */
+export const log = {
+  error(err: string | Error) {
+    return notify("pluginError", {
+      name: err.name || "Error",
+      message: err.message || err,
+      stack: err.stack,
+    });
+  },
+}
+
+/**
+ * Clipboard interface.
+ *
+ * @since Beekeeper Studio 5.3.0
+ **/
 export const clipboard = {
   /** Write text to the Electron clipboard. */
   async writeText(text: string): Promise<void> {
