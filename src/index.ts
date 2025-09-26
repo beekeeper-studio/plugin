@@ -74,6 +74,22 @@ export async function getAppInfo(): Promise<GetAppInfoResponse['result']> {
 }
 
 /**
+ * Get the version of Beekeeper Studio
+ * @since Beekeeper Studio 5.3.0
+ **/
+export async function getAppVersion(): Promise<"5.3" | (string & { __brand?: never })> {
+  try {
+    const appInfo = await getAppInfo();
+    return appInfo.version;
+  } catch (e){
+    if (e instanceof Error && e.message.includes("Unknown request")) {
+      return "5.3";
+    }
+    throw e;
+  }
+}
+
+/**
  * Check if plugin's update is available.
  *
  * @since Beekeeper Studio 5.4.0
@@ -159,11 +175,11 @@ export async function getData<T>(key: string = "default"): Promise<GetDataRespon
 
 /**
  * Store data that can be retrieved later.
- * 
+ *
  * @example
  * // Store with custom key
  * await setData("myKey", { name: "John" });
- * 
+ *
  * // Store with default key (equivalent to setData("default", value))
  * await setData({ name: "John" });
  *
@@ -186,11 +202,11 @@ export async function getEncryptedData<T>(key: string): Promise<GetEncryptedData
 
 /**
  * Store encrypted data that can be retrieved later.
- * 
+ *
  * @example
  * // Store with custom key
  * await setEncryptedData("secretKey", { token: "abc123" });
- * 
+ *
  * // Store with default key (equivalent to setEncryptedData("default", value))
  * await setEncryptedData({ token: "abc123" });
  *
