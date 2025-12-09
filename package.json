@@ -9,9 +9,13 @@
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js"
     },
-    "./internal": {
+    "./dist/internal": {
       "types": "./dist/internal.d.ts",
       "import": "./dist/internal.js"
+    },
+    "./dist/eventForwarder": {
+      "types": "./dist/eventForwarder.d.ts",
+      "import": "./dist/eventForwarder.js"
     }
   },
   "files": [

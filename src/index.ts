@@ -233,6 +233,18 @@ export async function requestFileSave(options: RequestFileSaveOptions): Promise<
   return await request({ name: "requestFileSave", args: options });
 }
 
+export async function showStatusBarUI(): Promise<void> {
+  return await request({ name: "toggleStatusBarUI", args: { force: true } });
+}
+
+export async function hideStatusBarUI(): Promise<void> {
+  return await request({ name: "toggleStatusBarUI", args: { force: false } });
+}
+
+export async function toggleStatusBarUI(): Promise<void> {
+  return await request({ name: "toggleStatusBarUI", args: void 0 });
+}
+
 /** @since Beekeeper Studio 5.4.0 */
 export const broadcast = {
   post<T extends JsonValue = JsonValue>(message: T): void {

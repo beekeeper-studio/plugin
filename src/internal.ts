@@ -140,6 +140,10 @@ export type RequestMap = {
     args: RequestFileSaveOptions;
     return: void;
   };
+  toggleStatusBarUI: {
+    args: { force?: boolean };
+    return: void;
+  };
   "clipboard.writeText": {
     args: {
       text: string;
@@ -158,16 +162,21 @@ export type RequestMap = {
   };
 };
 
-export type RequestPayload<T extends keyof RequestMap = keyof RequestMap> = {
-  id: string;
-  name: T;
-} & Pick<RequestMap[T], "args">;
+export type RequestPayload = {
+  [K in keyof RequestMap]: {
+    id: string;
+    name: K;
+    args: RequestMap[K]["args"];
+  };
+}[keyof RequestMap];
 
-export type ResponsePayload<T extends keyof RequestMap = keyof RequestMap> = {
-  id: string;
-  result: RequestMap[T]["return"];
-  error?: unknown;
-};
+export type ResponsePayload = {
+  [K in keyof RequestMap]: {
+    id: string;
+    result: RequestMap[K]["return"];
+    error?: unknown;
+  };
+}[keyof RequestMap];
 
 export type NotificationMap = {
   tablesChanged: {
