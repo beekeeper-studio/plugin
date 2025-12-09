@@ -3,8 +3,8 @@
 
 /** FIXME this file must be injected from the plugin system automatically */
 
-import { notify } from "./comms";
-import { WindowEventInits, WindowEventClass } from "./commonTypes";
+import { notify } from ".";
+import { WindowEventInits, WindowEventClass } from "./types";
 
 function createEventInit<T>(event: T): {
   eventClass: WindowEventClass;

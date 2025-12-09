@@ -4,6 +4,16 @@
   "description": "A simple TypeScript wrapper to send messages from your Beekeeper Studio plugin to the main app.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./internal": {
+      "types": "./dist/internal.d.ts",
+      "import": "./dist/internal.js"
+    }
+  },
   "files": [
     "dist/*.js",
     "dist/*.d.ts",

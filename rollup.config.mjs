@@ -45,11 +45,39 @@ export default [
     external: [],
   },
 
+
+  {
+    input: "src/internal.ts",
+    output: {
+      file: "dist/internal.js",
+      format: "esm",
+    },
+    plugins: [
+      resolve(),
+      commonjs(),
+      typescript({
+        tsconfig: "./tsconfig.json",
+        declaration: false,
+        outDir: "dist",
+      }),
+    ],
+    external: [],
+  },
+
   // TypeScript declarations
   {
     input,
     output: {
       file: "dist/index.d.ts",
+      format: "esm",
+    },
+    plugins: [dts()],
+    external: [],
+  },
+  {
+    input: "src/internal.ts",
+    output: {
+      file: "dist/internal.d.ts",
       format: "esm",
     },
     plugins: [dts()],
