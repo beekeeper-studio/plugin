@@ -144,6 +144,17 @@ export type RequestMap = {
     args: { force?: boolean };
     return: void;
   };
+  confirm: {
+    args: {
+      title?: string;
+      message?: string;
+      options?: {
+        confirmLabel?: string;
+        cancelLabel?: string;
+      };
+    };
+    return: boolean;
+  },
   "clipboard.writeText": {
     args: {
       text: string;
@@ -159,6 +170,30 @@ export type RequestMap = {
   "clipboard.readText": {
     args: void;
     return: string;
+  };
+  "noty.success": {
+    args: {
+      message: string;
+    };
+    return: void;
+  };
+  "noty.error": {
+    args: {
+      message: string;
+    };
+    return: void;
+  };
+  "noty.info": {
+    args: {
+      message: string;
+    };
+    return: void;
+  };
+  "noty.warning": {
+    args: {
+      message: string;
+    };
+    return: void;
   };
 };
 

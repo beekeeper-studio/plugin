@@ -225,3 +225,8 @@ export type WindowEventObject = {
   eventClass: WindowEventClass;
   eventInitOptions: WindowEventInits;
 }
+
+export type ConfirmOptions = {
+  confirmLabel?: string;
+  cancelLabel?: string;
+}

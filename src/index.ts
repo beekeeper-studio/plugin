@@ -1,4 +1,4 @@
-import type { AppInfo, AppTheme, Column, ConnectionInfo, JsonValue, OpenQueryTabOptions, OpenTableStructureTabOptions, OpenTableTableTabOptions, PluginErrorObject, PluginViewContext, PrimaryKey, QueryResult, RequestFileSaveOptions, RunQueryResult, Table, TableIndex, TableKey, WindowEventObject } from "./types";
+import type { AppInfo, AppTheme, Column, ConfirmOptions, ConnectionInfo, JsonValue, OpenQueryTabOptions, OpenTableStructureTabOptions, OpenTableTableTabOptions, PluginErrorObject, PluginViewContext, PrimaryKey, QueryResult, RequestFileSaveOptions, RunQueryResult, Table, TableIndex, TableKey, WindowEventObject } from "./types";
 import type { RequestMap } from "./internal";
 
 export * from "./types";
@@ -241,8 +241,14 @@ export async function hideStatusBarUI(): Promise<void> {
   return await request({ name: "toggleStatusBarUI", args: { force: false } });
 }
 
+/** @since Beekeeper Studio 5.5.? */
 export async function toggleStatusBarUI(): Promise<void> {
   return await request({ name: "toggleStatusBarUI", args: void 0 });
+}
+
+/** @since Beekeeper Studio 5.5.? */
+export async function confirm(title?: string, message?: string, options?: ConfirmOptions): Promise<boolean> {
+  return await request({ name: "confirm", args: { title, message, options } });
 }
 
 /** @since Beekeeper Studio 5.4.0 */
@@ -304,6 +310,34 @@ export const clipboard = {
   // async write() {},
   // async read() {},
 };
+
+/** @since Beekeeper Studio 5.5.? */
+export const noty = {
+  async success(message: string): Promise<void> {
+    return await request({
+      name: "noty.success",
+      args: { message },
+    });
+  },
+  async info(message: string): Promise<void> {
+    return await request({
+      name: "noty.info",
+      args: { message },
+    });
+  },
+  async warning(message: string): Promise<void> {
+    return await request({
+      name: "noty.warning",
+      args: { message },
+    });
+  },
+  async error(message: string): Promise<void> {
+    return await request({
+      name: "noty.error",
+      args: { message },
+    });
+  },
+}
 
 let debugComms = false;
 
