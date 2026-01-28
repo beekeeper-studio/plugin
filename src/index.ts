@@ -211,45 +211,6 @@ export async function openExternal(link: string): Promise<void> {
   return await request({ name: "openExternal", args: { link } });
 }
 
-/** @since Beekeeper Studio 5.3.0 */
-export async function getEncryptedData<T>(key: string): Promise<T> {
-  return await request({ name: "getEncryptedData", args: { key } });
-}
-
-/**
- * Store encrypted data that can be retrieved later.
- *
- * @example
- * // Store with custom key
- * await setEncryptedData("secretKey", { token: "abc123" });
- *
- * // Store with default key (equivalent to setEncryptedData("default", value))
- * await setEncryptedData({ token: "abc123" });
- *
- * @since Beekeeper Studio 5.3.0
- */
-export async function setEncryptedData<T = unknown>(
-  key: string,
-  value: T,
-): Promise<void>;
-export async function setEncryptedData<T = unknown>(value: T): Promise<void>;
-export async function setEncryptedData<T = unknown>(
-  keyOrValue: string | T,
-  value?: T,
-): Promise<void> {
-  if (value !== undefined) {
-    return await request({
-      name: "setEncryptedData",
-      args: { key: keyOrValue as string, value },
-    });
-  } else {
-    return await request({
-      name: "setEncryptedData",
-      args: { key: "default", value: keyOrValue as T },
-    });
-  }
-}
-
 /** @since Beekeeper Studio 5.4.0 */
 export async function openTab(
   type: "query",
@@ -375,10 +336,33 @@ export const clipboard = {
  * @since Beekeeper Studio 5.3.0
  **/
 export const appStorage = {
-  async getItem<T = unknown>(key: string): Promise<T | null> {
+  async getItem<T = unknown>(
+    key: string,
+    options?: {
+      encrypted: boolean;
+    },
+  ): Promise<T | null> {
+    if (options?.encrypted) {
+      return await request({
+        name: "getEncryptedData",
+        args: { key },
+      });
+    }
     return await request({ name: "getData", args: { key } });
   },
-  async setItem<T = unknown>(key: string, value: T): Promise<void> {
+  async setItem<T = unknown>(
+    key: string,
+    value: T,
+    options?: {
+      encrypted: boolean;
+    },
+  ): Promise<void> {
+    if (options?.encrypted) {
+      return await request({
+        name: "setEncryptedData",
+        args: { key, value },
+      });
+    }
     return await request({ name: "setData", args: { key, value } });
   },
   // TODO
