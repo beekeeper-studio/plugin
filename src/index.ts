@@ -18,6 +18,7 @@ import type {
   TableIndex,
   TableKey,
   WindowEventObject,
+  WorkspaceInfo,
 } from "./types";
 import type { RequestMap } from "./internal";
 
@@ -97,6 +98,15 @@ export async function getOutgoingKeys(
  **/
 export async function getConnectionInfo(): Promise<ConnectionInfo> {
   return await request({ name: "getConnectionInfo", args: void 0 });
+}
+
+/**
+ * Get information about the current workspace.
+ *
+ * @since Beekeeper Studio 5.5.?
+ **/
+export async function getWorkspaceInfo(): Promise<WorkspaceInfo> {
+  return await request({ name: "getWorkspaceInfo", args: void 0 });
 }
 
 /** @since Beekeeper Studio 5.4.0 */

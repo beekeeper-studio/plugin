@@ -23,38 +23,46 @@ export interface TableKey {
 }
 
 export type IndexColumn = {
-  name: string
-  order?: 'ASC' | 'DESC' | '2d' | '2dsphere' | 'text' | 'geoHaystack' | 'hashed' | number // after DESC is for mongo only
+  name: string;
+  order?:
+    | "ASC"
+    | "DESC"
+    | "2d"
+    | "2dsphere"
+    | "text"
+    | "geoHaystack"
+    | "hashed"
+    | number; // after DESC is for mongo only
   /** MySQL Only */
-  prefix?: number | null
-}
+  prefix?: number | null;
+};
 
 export type PrimaryKey = {
   columnName: string;
   position: number;
-}
+};
 
 export type TableIndex = {
-  id: string
-  table: string
-  schema: string
-  name: string
-  columns: IndexColumn[]
-  unique: boolean
-  primary: boolean
+  id: string;
+  table: string;
+  schema: string;
+  name: string;
+  columns: IndexColumn[];
+  unique: boolean;
+  primary: boolean;
   /** for postgres 15 and above https://www.postgresql.org/about/featurematrix/detail/392/ */
-  nullsNotDistinct?: boolean
-}
+  nullsNotDistinct?: boolean;
+};
 
 export type Table = {
   name: string;
   schema?: string;
-}
+};
 
 export type Column = {
   name: string;
   type: string;
-}
+};
 
 export type WindowEventClass =
   | "MouseEvent"
@@ -70,17 +78,17 @@ export type WindowEventInits =
 export type TableFilter = {
   field: string;
   type:
-  | "="
-  | "!="
-  | "like"
-  | "not like"
-  | "<"
-  | "<="
-  | ">"
-  | ">="
-  | "in"
-  | "is"
-  | "is not";
+    | "="
+    | "!="
+    | "like"
+    | "not like"
+    | "<"
+    | "<="
+    | ">"
+    | ">="
+    | "in"
+    | "is"
+    | "is not";
   value?: string | string[];
   op?: "AND" | "OR";
 };
@@ -155,7 +163,24 @@ export type PluginViewContext = {
   params?: CellMenuParams | ColumnMenuParams | RowMenuParams | CornerMenuParams;
 };
 
-export type DatabaseType = 'postgresql' | 'mysql' | 'mariadb' | 'sqlite' | 'sqlserver' | 'oracle' | 'mongodb' | 'cassandra' | 'clickhouse' | 'firebird' | 'bigquery' | 'redshift' | 'duckdb' | 'libsql' | 'redis' | 'surrealdb' | 'trino';
+export type DatabaseType =
+  | "postgresql"
+  | "mysql"
+  | "mariadb"
+  | "sqlite"
+  | "sqlserver"
+  | "oracle"
+  | "mongodb"
+  | "cassandra"
+  | "clickhouse"
+  | "firebird"
+  | "bigquery"
+  | "redshift"
+  | "duckdb"
+  | "libsql"
+  | "redis"
+  | "surrealdb"
+  | "trino";
 
 export type ConnectionInfo = {
   /** @alias databaseType */
@@ -171,12 +196,12 @@ export type ConnectionInfo = {
   databaseName: string;
   defaultSchema?: string;
   readOnlyMode: boolean;
-}
+};
 
 export type AppInfo = {
   version: string;
   theme: AppTheme;
-}
+};
 
 export type AppTheme = {
   palette: Record<string, string>;
@@ -187,7 +212,7 @@ export type AppTheme = {
 export type RunQueryResult = {
   results: QueryResult[];
   error?: unknown;
-}
+};
 
 export type OpenQueryTabOptions = {
   query?: string;
@@ -212,22 +237,29 @@ export type RequestFileSaveOptions = {
   /** @default "utf8" */
   encoding?: "utf8" | "base64";
   filters?: { name: string; extensions: string[] }[];
-}
+};
 
 export type PluginErrorObject = {
   name: string;
   message: string;
   stack?: string;
   logStack: string;
-}
+};
 
 export type WindowEventObject = {
   eventType: string;
   eventClass: WindowEventClass;
   eventInitOptions: WindowEventInits;
-}
+};
 
 export type ConfirmOptions = {
   confirmLabel?: string;
   cancelLabel?: string;
-}
+};
+
+export type WorkspaceInfo = {
+  id: number;
+  type: "local" | "cloud";
+  name: string;
+  isOwner: boolean;
+};

@@ -18,6 +18,7 @@ import {
   TableIndex,
   TableKey,
   WindowEventObject,
+  WorkspaceInfo,
 } from "./types";
 
 export type RequestMap = {
@@ -76,6 +77,10 @@ export type RequestMap = {
   getConnectionInfo: {
     args: void;
     return: ConnectionInfo;
+  };
+  getWorkspaceInfo: {
+    args: void;
+    return: WorkspaceInfo;
   };
   getAppInfo: {
     args: void;
