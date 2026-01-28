@@ -1,10 +1,30 @@
-import { AppInfo, AppTheme, Column, ConnectionInfo, JsonValue, OpenQueryTabOptions, OpenTableStructureTabOptions, OpenTableTableTabOptions, PluginErrorObject, PrimaryKey, QueryResult, RequestFileSaveOptions, RunQueryResult, Table, TableIndex, TableKey, WindowEventObject } from "./types";
+// This file is used by the Beekeeper Studio plugin system (a.k.a the host)
+
+import {
+  AppInfo,
+  AppTheme,
+  Column,
+  ConnectionInfo,
+  JsonValue,
+  OpenQueryTabOptions,
+  OpenTableStructureTabOptions,
+  OpenTableTableTabOptions,
+  PluginErrorObject,
+  PrimaryKey,
+  QueryResult,
+  RequestFileSaveOptions,
+  RunQueryResult,
+  Table,
+  TableIndex,
+  TableKey,
+  WindowEventObject,
+} from "./types";
 
 export type RequestMap = {
   getSchemas: {
     args: void;
     return: string[];
-  },
+  };
   getTables: {
     args: {
       schema?: string;
@@ -131,7 +151,7 @@ export type RequestMap = {
   };
   openTab: {
     args:
-    ({ type: "query" } & OpenQueryTabOptions)
+    | ({ type: "query" } & OpenQueryTabOptions)
     | ({ type: "tableTable" } & OpenTableTableTabOptions)
     | ({ type: "tableStructure" } & OpenTableStructureTabOptions);
     return: void;
@@ -154,7 +174,7 @@ export type RequestMap = {
       };
     };
     return: boolean;
-  },
+  };
   "clipboard.writeText": {
     args: {
       text: string;
@@ -170,6 +190,19 @@ export type RequestMap = {
   "clipboard.readText": {
     args: void;
     return: string;
+  };
+  "workspaceConnectionStorage.setItem": {
+    args: {
+      key: string;
+      value: any;
+    };
+    return: void;
+  };
+  "workspaceConnectionStorage.getItem": {
+    args: {
+      key: string;
+    };
+    return: any;
   };
   "noty.success": {
     args: {
@@ -231,5 +264,7 @@ export type NotificationMap = {
   pluginError: {
     args: PluginErrorObject;
   };
+  dataPollSucceeded: {
+    args: void;
+  };
 };
-

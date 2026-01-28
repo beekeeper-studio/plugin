@@ -1,4 +1,24 @@
-import type { AppInfo, AppTheme, Column, ConfirmOptions, ConnectionInfo, JsonValue, OpenQueryTabOptions, OpenTableStructureTabOptions, OpenTableTableTabOptions, PluginErrorObject, PluginViewContext, PrimaryKey, QueryResult, RequestFileSaveOptions, RunQueryResult, Table, TableIndex, TableKey, WindowEventObject } from "./types";
+import type {
+  AppInfo,
+  AppTheme,
+  Column,
+  ConfirmOptions,
+  ConnectionInfo,
+  JsonValue,
+  OpenQueryTabOptions,
+  OpenTableStructureTabOptions,
+  OpenTableTableTabOptions,
+  PluginErrorObject,
+  PluginViewContext,
+  PrimaryKey,
+  QueryResult,
+  RequestFileSaveOptions,
+  RunQueryResult,
+  Table,
+  TableIndex,
+  TableKey,
+  WindowEventObject,
+} from "./types";
 import type { RequestMap } from "./internal";
 
 export * from "./types";
@@ -26,29 +46,47 @@ export async function getTables(schema?: string): Promise<Table[]> {
  *
  * @since Beekeeper Studio 5.3.0
  **/
-export async function getColumns(table: string, schema?: string): Promise<Column[]> {
+export async function getColumns(
+  table: string,
+  schema?: string,
+): Promise<Column[]> {
   return await request({ name: "getColumns", args: { table, schema } });
 }
 
 /** @since Beekeeper Studio 5.4.0 */
-export async function getTableKeys(table: string, schema?: string): Promise<TableKey[]> {
+export async function getTableKeys(
+  table: string,
+  schema?: string,
+): Promise<TableKey[]> {
   return await request({ name: "getTableKeys", args: { table, schema } });
 }
 
 /** @since Beekeeper Studio 5.5.0 */
-export async function getTableIndexes(table: string, schema?: string): Promise<TableIndex[]> {
+export async function getTableIndexes(
+  table: string,
+  schema?: string,
+): Promise<TableIndex[]> {
   return await request({ name: "getTableIndexes", args: { table, schema } });
 }
 
-export async function getPrimaryKeys(table: string, schema?: string): Promise<PrimaryKey[]> {
+export async function getPrimaryKeys(
+  table: string,
+  schema?: string,
+): Promise<PrimaryKey[]> {
   return await request({ name: "getPrimaryKeys", args: { table, schema } });
 }
 
-export async function getIncomingKeys(table: string, schema?: string): Promise<TableKey[]> {
+export async function getIncomingKeys(
+  table: string,
+  schema?: string,
+): Promise<TableKey[]> {
   return await request({ name: "getIncomingKeys", args: { table, schema } });
 }
 
-export async function getOutgoingKeys(table: string, schema?: string): Promise<TableKey[]> {
+export async function getOutgoingKeys(
+  table: string,
+  schema?: string,
+): Promise<TableKey[]> {
   return await request({ name: "getOutgoingKeys", args: { table, schema } });
 }
 
@@ -70,7 +108,9 @@ export async function getAppInfo(): Promise<AppInfo> {
  * Get the version of Beekeeper Studio
  * @since Beekeeper Studio 5.3.0
  **/
-export async function getAppVersion(): Promise<"5.3" | (string & { __brand?: never })> {
+export async function getAppVersion(): Promise<
+  "5.3" | (string & { __brand?: never })
+> {
   try {
     const appInfo = await getAppInfo();
     return appInfo.version;
@@ -162,33 +202,6 @@ export async function openExternal(link: string): Promise<void> {
 }
 
 /** @since Beekeeper Studio 5.3.0 */
-export async function getData<T = unknown>(key: string = "default"): Promise<T> {
-  return await request({ name: "getData", args: { key } });
-}
-
-/**
- * Store data that can be retrieved later.
- *
- * @example
- * // Store with custom key
- * await setData("myKey", { name: "John" });
- *
- * // Store with default key (equivalent to setData("default", value))
- * await setData({ name: "John" });
- *
- * @since Beekeeper Studio 5.3.0
- */
-export async function setData<T = unknown>(key: string, value: T): Promise<void>;
-export async function setData<T = unknown>(value: T): Promise<void>;
-export async function setData<T = unknown>(keyOrValue: string | T, value?: T): Promise<void> {
-  if (value !== undefined) {
-    return await request({ name: "setData", args: { key: keyOrValue as string, value } });
-  } else {
-    return await request({ name: "setData", args: { key: "default", value: keyOrValue as T } });
-  }
-}
-
-/** @since Beekeeper Studio 5.3.0 */
 export async function getEncryptedData<T>(key: string): Promise<T> {
   return await request({ name: "getEncryptedData", args: { key } });
 }
@@ -205,31 +218,54 @@ export async function getEncryptedData<T>(key: string): Promise<T> {
  *
  * @since Beekeeper Studio 5.3.0
  */
-export async function setEncryptedData<T = unknown>(key: string, value: T): Promise<void>;
+export async function setEncryptedData<T = unknown>(
+  key: string,
+  value: T,
+): Promise<void>;
 export async function setEncryptedData<T = unknown>(value: T): Promise<void>;
-export async function setEncryptedData<T = unknown>(keyOrValue: string | T, value?: T): Promise<void> {
+export async function setEncryptedData<T = unknown>(
+  keyOrValue: string | T,
+  value?: T,
+): Promise<void> {
   if (value !== undefined) {
-    return await request({ name: "setEncryptedData", args: { key: keyOrValue as string, value } });
+    return await request({
+      name: "setEncryptedData",
+      args: { key: keyOrValue as string, value },
+    });
   } else {
-    return await request({ name: "setEncryptedData", args: { key: "default", value: keyOrValue as T } });
+    return await request({
+      name: "setEncryptedData",
+      args: { key: "default", value: keyOrValue as T },
+    });
   }
 }
 
 /** @since Beekeeper Studio 5.4.0 */
-export async function openTab(type: "query", options?: OpenQueryTabOptions): Promise<void>;
-export async function openTab(type: "tableTable", options: OpenTableTableTabOptions): Promise<void>;
-export async function openTab(type: "tableStructure", options: OpenTableStructureTabOptions): Promise<void>;
+export async function openTab(
+  type: "query",
+  options?: OpenQueryTabOptions,
+): Promise<void>;
+export async function openTab(
+  type: "tableTable",
+  options: OpenTableTableTabOptions,
+): Promise<void>;
+export async function openTab(
+  type: "tableStructure",
+  options: OpenTableStructureTabOptions,
+): Promise<void>;
 export async function openTab(
   type: "query" | "tableTable" | "tableStructure",
   options?:
-    OpenQueryTabOptions
+    | OpenQueryTabOptions
     | OpenTableTableTabOptions
-    | OpenTableStructureTabOptions
+    | OpenTableStructureTabOptions,
 ): Promise<void> {
   return await request({ name: "openTab", args: { type, ...options } });
 }
 
-export async function requestFileSave(options: RequestFileSaveOptions): Promise<void> {
+export async function requestFileSave(
+  options: RequestFileSaveOptions,
+): Promise<void> {
   return await request({ name: "requestFileSave", args: options });
 }
 
@@ -247,7 +283,11 @@ export async function toggleStatusBarUI(): Promise<void> {
 }
 
 /** @since Beekeeper Studio 5.5.? */
-export async function confirm(title?: string, message?: string, options?: ConfirmOptions): Promise<boolean> {
+export async function confirm(
+  title?: string,
+  message?: string,
+  options?: ConfirmOptions,
+): Promise<boolean> {
   return await request({ name: "confirm", args: { title, message, options } });
 }
 
@@ -261,25 +301,31 @@ export const broadcast = {
       handler(params.message);
     });
   },
-}
+};
 
-/** @since Beekeeper Studio 5.3.0 */
-export const log = {
+class PluginLog {
   error(err: string | Error): void {
+    const logStack = new Error().stack!;
+
     if (typeof err === "string") {
       return notify("pluginError", {
         name: "Error",
         message: err,
-        stack: undefined,
+        stack: logStack,
+        logStack,
       });
     }
     return notify("pluginError", {
       name: err.name || "Error",
       message: err.message,
       stack: err.stack,
+      logStack,
     });
-  },
+  }
 }
+
+/** @since Beekeeper Studio 5.3.0 */
+export const log = new PluginLog();
 
 /** Clipboard interface. */
 export const clipboard = {
@@ -311,6 +357,43 @@ export const clipboard = {
   // async read() {},
 };
 
+/**
+ * Similar to `localStorage`, `appStorage` is a persistent storage that persists
+ * across sessions. The data is stored in the local database of the app and
+ * scoped to the plugin.
+ *
+ * @since Beekeeper Studio 5.3.0
+ **/
+export const appStorage = {
+  async getItem<T = unknown>(key: string): Promise<T | null> {
+    return await request({ name: "getData", args: { key } });
+  },
+  async setItem<T = unknown>(key: string, value: T): Promise<void> {
+    return await request({ name: "setData", args: { key, value } });
+  },
+  // TODO
+  // async removeItem(key: string): Promise<void> {},
+  // async clear(): Promise<void> {},
+};
+
+export const workspaceConnectionStorage = {
+  async getItem<T = unknown>(key: string): Promise<T | null> {
+    return await request({
+      name: "workspaceConnectionStorage.getItem",
+      args: { key },
+    });
+  },
+  async setItem<T = unknown>(key: string, value: T): Promise<void> {
+    return await request({
+      name: "workspaceConnectionStorage.setItem",
+      args: { key, value },
+    });
+  },
+  // TODO
+  // async removeItem(key: string): Promise<void> {},
+  // async clear(): Promise<void> {},
+};
+
 /** @since Beekeeper Studio 5.5.? */
 export const noty = {
   async success(message: string): Promise<void> {
@@ -337,7 +420,7 @@ export const noty = {
       args: { message },
     });
   },
-}
+};
 
 let debugComms = false;
 
@@ -347,7 +430,7 @@ export function setDebugComms(enabled: boolean) {
 
 export function notify<Message extends JsonValue = JsonValue>(
   name: "broadcast",
-  args: { message: Message; }
+  args: { message: Message },
 ): void;
 export function notify(name: "pluginError", args: PluginErrorObject): void;
 export function notify(name: "windowEvent", args: WindowEventObject): void;
@@ -369,11 +452,15 @@ export function addNotificationListener(
 ): void;
 export function addNotificationListener<Message extends JsonValue = JsonValue>(
   name: "broadcast",
-  handler: (args: { message: Message; }) => void,
+  handler: (args: { message: Message }) => void,
 ): void;
 export function addNotificationListener(
   name: "themeChanged",
   handler: (args: AppTheme) => void,
+): void;
+export function addNotificationListener(
+  name: "dataPollSucceeded",
+  handler: () => void,
 ): void;
 export function addNotificationListener(
   name: string,
@@ -387,19 +474,18 @@ export function addNotificationListener(
 
 export function removeNotificationListener(
   name: "tablesChanged",
-  handler: (args: any) => void
+  handler: (args: any) => void,
 ): void;
-export function removeNotificationListener<Message extends JsonValue = JsonValue>(
-  name: "broadcast",
-  handler: (args: any) => void
-): void;
+export function removeNotificationListener<
+  Message extends JsonValue = JsonValue,
+>(name: "broadcast", handler: (args: any) => void): void;
 export function removeNotificationListener(
   name: "themeChanged",
-  handler: (args: any) => void
+  handler: (args: any) => void,
 ): void;
 export function removeNotificationListener(
   name: string,
-  handler: (args: any) => void
+  handler: (args: any) => void,
 ) {
   const handlers = notificationListeners.get(name);
   if (handlers) {
@@ -420,9 +506,10 @@ const pendingRequests = new Map<
   }
 >();
 
-export async function request<T extends keyof RequestMap>(
-  raw: { name: T; args: RequestMap[T]["args"] }
-): Promise<RequestMap[T]["return"]> {
+export async function request<T extends keyof RequestMap>(raw: {
+  name: T;
+  args: RequestMap[T]["args"];
+}): Promise<RequestMap[T]["return"]> {
   const payload = { id: generateUUID(), ...raw };
 
   if (debugComms) {
@@ -500,4 +587,3 @@ function generateUUID() {
     hex.substring(20),
   ].join("-");
 }
-

@@ -215,9 +215,10 @@ export type RequestFileSaveOptions = {
 }
 
 export type PluginErrorObject = {
-  name?: string;
+  name: string;
   message: string;
   stack?: string;
+  logStack: string;
 }
 
 export type WindowEventObject = {
