@@ -196,14 +196,14 @@ export type RequestMap = {
     args: void;
     return: string;
   };
-  "workspaceConnectionStorage.setItem": {
+  "cloudStorage.connection.setItem": {
     args: {
       key: string;
       value: any;
     };
     return: void;
   };
-  "workspaceConnectionStorage.getItem": {
+  "cloudStorage.connection.getItem": {
     args: {
       key: string;
     };

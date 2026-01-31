@@ -371,17 +371,19 @@ export const appStorage = {
 };
 
 export const workspaceConnectionStorage = {
-  async getItem<T = unknown>(key: string): Promise<T | null> {
-    return await request({
-      name: "workspaceConnectionStorage.getItem",
-      args: { key },
-    });
-  },
-  async setItem<T = unknown>(key: string, value: T): Promise<void> {
-    return await request({
-      name: "workspaceConnectionStorage.setItem",
-      args: { key, value },
-    });
+  connection: {
+    async getItem<T = unknown>(key: string): Promise<T | null> {
+      return await request({
+        name: "cloudStorage.connection.getItem",
+        args: { key },
+      });
+    },
+    async setItem<T = unknown>(key: string, value: T): Promise<void> {
+      return await request({
+        name: "cloudStorage.connection.setItem",
+        args: { key, value },
+      });
+    },
   },
   // TODO
   // async removeItem(key: string): Promise<void> {},
