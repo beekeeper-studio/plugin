@@ -370,7 +370,7 @@ export const appStorage = {
   // async clear(): Promise<void> {},
 };
 
-export const workspaceConnectionStorage = {
+export const cloudStorage = {
   connection: {
     async getItem<T = unknown>(key: string): Promise<T | null> {
       return await request({
