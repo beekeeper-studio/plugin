@@ -17,8 +17,13 @@ list_recent_remote_tags() {
 
 # Function to get the next version in sequence
 guess_next_version() {
-  local latest_version
-  latest_version=$(list_remote_tags | tail -n 1)
+  local latest_tag
+  latest_tag=$(git ls-remote --tags origin | \
+    grep -Eo 'v[0-9]+\.[0-9]+\.[0-9]+(-[a-z]+\.[0-9]+)?$' | \
+    sort -V | tail -n 1)
+
+  # Strip 'v' from the tag
+  latest_version="${latest_tag#v}"
 
   if [[ "$latest_version" =~ ^([0-9]+)\.([0-9]+)\.([0-9]+)(-(alpha|beta|rc)\.([0-9]+))?$ ]]; then
     major="${BASH_REMATCH[1]}"
