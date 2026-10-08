@@ -235,19 +235,21 @@ export type RequestMap = {
   };
 };
 
+export type ResponseData = {
+  [K in keyof RequestMap]: {
+    id: string;
+    name: K;
+    args: RequestMap[K]["args"];
+    result: RequestMap[K]["return"];
+    error?: unknown;
+  };
+}[keyof RequestMap];
+
 export type RequestPayload = {
   [K in keyof RequestMap]: {
     id: string;
     name: K;
     args: RequestMap[K]["args"];
-  };
-}[keyof RequestMap];
-
-export type ResponsePayload = {
-  [K in keyof RequestMap]: {
-    id: string;
-    result: RequestMap[K]["return"];
-    error?: unknown;
   };
 }[keyof RequestMap];
 
@@ -273,3 +275,10 @@ export type NotificationMap = {
     args: void;
   };
 };
+
+export type NotificationData = {
+  [K in keyof NotificationMap]: {
+    name: K,
+    args: NotificationMap[K]["args"]
+  }
+}[keyof NotificationMap]
