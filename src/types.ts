@@ -152,15 +152,82 @@ export type CornerMenuParams = {
   activeRange: ActiveRange;
 };
 
+/** Params from the query editor: `editor.query.context` and
+ * `editor.query.toolbar`. */
+export type EditorMenuParams = {
+  /** The whole text of the editor. */
+  text: string;
+  /** The selected text, or an empty string. */
+  selectedText: string;
+  /** The statement under the cursor, or an empty string. */
+  selectedQuery: string;
+};
+
+export type MenuEntity = {
+  type: string;
+  schema?: string;
+  name: string;
+};
+
+/**
+ * Params from the Visualize menu: `results.statusbar` and
+ * `tableTable.statusbar`.
+ *
+ * - `selection`: the user selected more than one cell. `activeRange` holds it.
+ * - `result`: every row of a query result. `activeRange` holds it.
+ * - `table`: a table view with nothing selected. The grid only holds one
+ *   page, so no rows are sent. Read the table from `entity`, applying
+ *   `where`, with your own row limit.
+ */
+export type StatusbarMenuParams = {
+  source: "selection" | "result" | "table";
+  activeRange?: ActiveRange;
+  /** Same as `activeRange`, so `CornerMenuParams` handlers work unchanged. */
+  target?: CornerMenuTarget;
+  /** Query results only: the statement that produced the result. */
+  query?: string;
+  /** Query results only: the result stopped at the row limit. */
+  truncated?: boolean;
+  /** Table view only: the table being viewed. */
+  entity?: MenuEntity;
+  /** Table view only: the filters applied in the table view. */
+  filters?: TableFilter[];
+  /** Table view only: the SQL condition for `filters`, without the `WHERE`
+   * keyword. Empty when there are no filters. */
+  where?: string;
+};
+
+/** Params from a tab header: `tab.query.header.context` and
+ * `tab.table.header.context`. */
+export type TabMenuParams = {
+  tab: {
+    type: string;
+    id: number;
+    title: string;
+    data?: { [key: string]: JsonValue };
+  };
+};
+
+/** Params from the sidebar (`entity.*.context`) and the structure view
+ * (`structure.statusbar.menu`). */
+export type EntityMenuParams = {
+  entity: MenuEntity;
+};
+
 export type LoadViewParams =
   | CornerMenuParams
   | RowMenuParams
   | ColumnMenuParams
-  | CellMenuParams;
+  | CellMenuParams
+  | EditorMenuParams
+  | StatusbarMenuParams
+  | TabMenuParams
+  | EntityMenuParams;
 
 export type PluginViewContext = {
   command: string;
-  params?: CellMenuParams | ColumnMenuParams | RowMenuParams | CornerMenuParams;
+  /** Depends on the placement of the menu item that opened the view. */
+  params?: LoadViewParams;
 };
 
 export type DatabaseType =
