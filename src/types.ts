@@ -173,7 +173,8 @@ export type MenuEntity = {
  * Params from the Visualize menu: `results.statusbar` and
  * `tableTable.statusbar`.
  *
- * - `selection`: the user selected more than one cell. `activeRange` holds it.
+ * - `selection`: the user selected more than one cell, or a row or column
+ *   from its header. `activeRange` holds it.
  * - `result`: every row of a query result. `activeRange` holds it.
  * - `table`: a table view with nothing selected. The grid only holds one
  *   page, so no rows are sent. Read the table from `entity`, applying
