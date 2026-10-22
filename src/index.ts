@@ -231,7 +231,7 @@ export async function openTab(
     | OpenTableTableTabOptions
     | OpenTableStructureTabOptions,
 ): Promise<void> {
-  return await request({ name: "openTab", args: { type, ...options } });
+  return await request({ name: "openTab", args: { type, ...options } as RequestMap["openTab"]["args"] });
 }
 
 export async function requestFileSave(
@@ -250,7 +250,7 @@ export async function hideStatusBarUI(): Promise<void> {
 
 /** @since Beekeeper Studio 5.5.? */
 export async function toggleStatusBarUI(): Promise<void> {
-  return await request({ name: "toggleStatusBarUI", args: void 0 });
+  return await request({ name: "toggleStatusBarUI", args: {} });
 }
 
 /** @since Beekeeper Studio 5.5.? */

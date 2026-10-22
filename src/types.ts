@@ -220,14 +220,14 @@ export type OpenQueryTabOptions = {
 };
 
 export type OpenTableTableTabOptions = {
-  table: string;
+  name: string;
   schema?: string;
   filters?: TableFilter[];
   database?: string;
 };
 
 export type OpenTableStructureTabOptions = {
-  table: string;
+  name: string;
   schema?: string;
   database?: string;
 };
