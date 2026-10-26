@@ -87,6 +87,7 @@ export type TableFilter = {
     | ">"
     | ">="
     | "in"
+    | "not in"
     | "is"
     | "is not";
   value?: string | string[];
@@ -170,24 +171,31 @@ export type MenuEntity = {
 };
 
 /**
- * Params from the Visualize menu: `results.statusbar` and
- * `tableTable.statusbar`.
- *
- * - `selection`: the user selected more than one cell, or a row or column
- *   from its header. `activeRange` holds it.
- * - `result`: every row of a query result. `activeRange` holds it.
- * - `table`: a table view with nothing selected. The grid only holds one
- *   page, so no rows are sent. Read the table from `entity`, applying
- *   `where`, with your own row limit.
+ * Params from the Visualize menu in a data grid's status bar:
+ * `results.statusbar` (query results) and `tableTable.statusbar` (table
+ * views).
  */
-export type StatusbarMenuParams = {
+export type GridStatusbarMenuParams = {
+  /**
+   * What was sent:
+   *
+   * - `selection`: the user selected more than one cell, or a row or column
+   *   from its header. `target` holds the selection.
+   * - `result`: nothing is selected in a query result. `target` holds every
+   *   row of the result.
+   * - `table`: nothing is selected in a table view. The grid only holds one
+   *   page, so no rows are sent. Read the table from `entity`, applying
+   *   `where`, with your own row limit.
+   */
   source: "selection" | "result" | "table";
-  activeRange?: ActiveRange;
-  /** Same as `activeRange`, so `CornerMenuParams` handlers work unchanged. */
+  /** The rows sent, shaped like a `CornerMenuTarget` so corner menu handlers
+   * work unchanged. Absent when `source` is `"table"`. */
   target?: CornerMenuTarget;
   /** Query results only: the statement that produced the result. */
   query?: string;
-  /** Query results only: the result stopped at the row limit. */
+  /** Query results only: the result stopped at the app's row limit, so
+   * `target` may not hold every row the query returns. Run `query` again for
+   * more. */
   truncated?: boolean;
   /** Table view only: the table being viewed. */
   entity?: MenuEntity;
@@ -215,13 +223,16 @@ export type EntityMenuParams = {
   entity: MenuEntity;
 };
 
+/** @deprecated Renamed to `GridStatusbarMenuParams`. */
+export type StatusbarMenuParams = GridStatusbarMenuParams;
+
 export type LoadViewParams =
   | CornerMenuParams
   | RowMenuParams
   | ColumnMenuParams
   | CellMenuParams
   | EditorMenuParams
-  | StatusbarMenuParams
+  | GridStatusbarMenuParams
   | TabMenuParams
   | EntityMenuParams;
 
