@@ -10,9 +10,11 @@ queries and integrate with the Beekeeper Studio UI.
 ## Documentation
 
 - [Plugin Development Introduction](https://docs.beekeeperstudio.io/plugin_development/) - how plugins work
+- [Plugin SDK](https://docs.beekeeperstudio.io/plugin_development/sdk/) - overview of the SDK and the Vite build plugin
 - [Creating Your First Plugin](https://docs.beekeeperstudio.io/plugin_development/creating-your-first-plugin/) - step-by-step tutorial
 - [SDK Reference](https://docs.beekeeperstudio.io/plugin_development/api-reference/) - every function, event and type in the SDK
-- [Plugin Views](https://docs.beekeeperstudio.io/plugin_development/plugin-views/) - where plugins appear in the UI
+- [Plugin Views](https://docs.beekeeperstudio.io/plugin_development/plugin-views/) - the tab types a plugin can open
+- [Integration Points](https://docs.beekeeperstudio.io/plugin_development/integration-points/) - every menu and button a plugin can add to
 - [Manifest Reference](https://docs.beekeeperstudio.io/plugin_development/manifest/) - the `manifest.json` format
 - [Publishing Plugins](https://docs.beekeeperstudio.io/plugin_development/publishing-plugins/) - distribute your plugin to other users
 
