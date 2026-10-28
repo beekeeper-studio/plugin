@@ -3,7 +3,7 @@
   "entryPoints": ["src/index.ts"],
   "out": "docs",
   "readme": "README.md",
-  "name": "@beekeeperstudio/plugin",
+  "name": "Beekeeper Studio Plugin SDK",
   "excludeInternal": true,
   "skipErrorChecking": true,
   "navigationLinks": {
