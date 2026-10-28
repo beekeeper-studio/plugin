@@ -2,6 +2,7 @@
 
 import {
   AppInfo,
+  AppStorageOptions,
   AppTheme,
   Column,
   ConnectionInfo,
@@ -131,6 +132,7 @@ export type RequestMap = {
   getData: {
     args: {
       key: string;
+      scope?: AppStorageOptions["scope"];
     };
     return: any;
   };
@@ -138,12 +140,14 @@ export type RequestMap = {
     args: {
       key: string;
       value: any;
+      scope?: AppStorageOptions["scope"];
     };
     return: void;
   };
   getEncryptedData: {
     args: {
       key: string;
+      scope?: AppStorageOptions["scope"];
     };
     return: any;
   };
@@ -151,6 +155,7 @@ export type RequestMap = {
     args: {
       key: string;
       value: any;
+      scope?: AppStorageOptions["scope"];
     };
     return: void;
   };

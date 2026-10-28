@@ -264,3 +264,12 @@ export type WorkspaceInfo = {
   name: string;
   isOwner: boolean;
 };
+
+export type AppStorageOptions = {
+  encrypted?: boolean;
+  /**
+   * Limits a stored value to the active connection or workspace, so the same
+   * key holds a separate value in each one.
+   */
+  scope?: "currentConnection" | "currentWorkspace";
+};
