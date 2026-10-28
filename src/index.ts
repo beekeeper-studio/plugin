@@ -377,6 +377,21 @@ export const appStorage = {
       args: { key, value, scope: options?.scope },
     });
   },
+  /** Alias of {@link appStorage.get}. */
+  async getItem<T = unknown>(
+    key: string,
+    options?: AppStorageOptions,
+  ): Promise<T | null> {
+    return await appStorage.get<T>(key, options);
+  },
+  /** Alias of {@link appStorage.set}. */
+  async setItem<T = unknown>(
+    key: string,
+    value: T,
+    options?: AppStorageOptions,
+  ): Promise<void> {
+    return await appStorage.set<T>(key, value, options);
+  },
   // TODO
   // async removeItem(key: string): Promise<void> {},
   // async clear(): Promise<void> {},
