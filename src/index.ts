@@ -1,5 +1,6 @@
 import type {
   AppInfo,
+  AppStorageOptions,
   AppTheme,
   Column,
   ConfirmOptions,
@@ -329,61 +330,67 @@ export const clipboard = {
 };
 
 /**
- * Similar to `localStorage`, `appStorage` is a persistent storage that persists
- * across sessions. The data is stored in the local database of the app and
- * scoped to the plugin.
+ * Persistent key-value storage for the plugin, stored in the app's local
+ * database.
  *
- * @since Beekeeper Studio 5.3.0
+ * @example
+ * ```ts
+ * await appStorage.set("pageSize", 50);
+ * await appStorage.set("lastQuery", "select 1", {
+ *   scope: "currentConnection",
+ * });
+ * await appStorage.get("pageSize"); // 50
+ * await appStorage.get("lastQuery", {
+ *   scope: "currentConnection",
+ * }); // "select 1"
+ * ```
  **/
 export const appStorage = {
-  async getItem<T = unknown>(
+  async get<T = unknown>(
     key: string,
-    options?: {
-      encrypted: boolean;
-    },
+    options?: AppStorageOptions,
   ): Promise<T | null> {
     if (options?.encrypted) {
       return await request({
         name: "getEncryptedData",
-        args: { key },
+        args: { key, scope: options.scope },
       });
     }
-    return await request({ name: "getData", args: { key } });
+    return await request({
+      name: "getData",
+      args: { key, scope: options?.scope },
+    });
   },
-  async setItem<T = unknown>(
+  async set<T = unknown>(
     key: string,
     value: T,
-    options?: {
-      encrypted: boolean;
-    },
+    options?: AppStorageOptions,
   ): Promise<void> {
     if (options?.encrypted) {
       return await request({
         name: "setEncryptedData",
-        args: { key, value },
+        args: { key, value, scope: options.scope },
       });
     }
-    return await request({ name: "setData", args: { key, value } });
+    return await request({
+      name: "setData",
+      args: { key, value, scope: options?.scope },
+    });
   },
-  // TODO
-  // async removeItem(key: string): Promise<void> {},
-  // async clear(): Promise<void> {},
-};
-
-export const cloudStorage = {
-  connection: {
-    async getItem<T = unknown>(key: string): Promise<T | null> {
-      return await request({
-        name: "cloudStorage.connection.getItem",
-        args: { key },
-      });
-    },
-    async setItem<T = unknown>(key: string, value: T): Promise<void> {
-      return await request({
-        name: "cloudStorage.connection.setItem",
-        args: { key, value },
-      });
-    },
+  /** Alias of {@link appStorage.get}. */
+  async getItem<T = unknown>(
+    key: string,
+    options?: AppStorageOptions,
+  ): Promise<T | null> {
+    return await appStorage.get<T>(key, options);
+  },
+  /** Alias of {@link appStorage.set}. */
+  async setItem<T = unknown>(
+    key: string,
+    value: T,
+    options?: AppStorageOptions,
+  ): Promise<void> {
+    return await appStorage.set<T>(key, value, options);
   },
   // TODO
   // async removeItem(key: string): Promise<void> {},
